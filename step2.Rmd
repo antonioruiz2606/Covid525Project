@@ -1,0 +1,12 @@
+---
+title: "CovidProjectStep2"
+author: "Aditya"
+date: "22/10/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
