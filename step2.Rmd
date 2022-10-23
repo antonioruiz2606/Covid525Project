@@ -2,6 +2,11 @@
 title: "CovidProjectStep2"
 author: "Aditya"
 date: "22/10/2022"
+fontsize: 12pt
+geometry: margin=2.54cm
+mainfont: Times New Roman
+header-includes:
+    - \usepackage{setspace}\singlespacing
 output: pdf_document
 ---
 
