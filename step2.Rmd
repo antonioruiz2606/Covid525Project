@@ -1,9 +1,8 @@
 ---
-title: "CovidProjectStep2"
-author: "Aditya"
-date: "22/10/2022"
+title: "Regression Analysis on COVID, Health, and Population Metrics"
+author: "Antonio R, Aditya M, Aadam L, Christopher L"
 fontsize: 12pt
-geometry: margin=2.54cm
+geometry: "margin=2.54cm,top=1cm"
 mainfont: Times New Roman
 header-includes:
     - \usepackage{setspace}\singlespacing
@@ -14,4 +13,37 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+We can answer multiple questions using regression analysis of the covid data.
+The statistical relation between total death in a country and various parameters like vaccination, age, population, etc using regression analysis of the covid dataset.
+For example, We could find the correlation between total death due to Covid in a country and number of vaccinated people.
 
+This dataset includes data on confirmed COVID cases, deaths, hospitalizations, testing, and vaccinations across
+several countries since January 4, 2021. The goal of this project is to explore how a the number of new vaccinations
+varies with respect to other measures over time and across different counties.
+  
+### Where the data came from  
+  
+An individual observation corresponds to the number of new covid cases, total number of covid cases, total number of death, and
+other covid, health, and population related metrics for a country in a single day since January 4, 2021. 
+  
+We could select multiple combinations of responses and observations to do a regression, so there doesn't need to be a specific response. However, we will focus on the total number of deaths/cases as well as total number of new deaths/cases
+  
+Our covariates are: days after January 4th, 2021; new tests; total tests; positive rate; tests per case; total vaccinations; people vaccinated; people fully vaccinated; new vaccinations; population; population density; median age; percentage of population aged over 65/70; GPD per capita; cardiovascular death rate; diabetes prevalence; female smokers; male smokers; hospital beds per thousand; life expectancy; human development index; stringency index.
+
+The number of observations is 1107
+
+```{r, echo=FALSE, out.width="50%"}
+covid <- read.csv(file = 'covid.csv')
+hist(covid$new_deaths, 
+     breaks = 20,
+     main = "Fig1: Histogram of New death due to COVID",
+     axes = TRUE,
+     xlab = "New Deaths",
+     col = "blue")
+hist(covid$total_deaths, 
+     breaks = 20,
+     main = "Fig2: Histogram of Total death due to COVID",
+     axes = TRUE,
+     xlab = "Total Deaths",
+     col = "blue")
+```
