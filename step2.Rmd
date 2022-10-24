@@ -21,8 +21,6 @@ This dataset includes data on confirmed COVID cases, deaths, hospitalizations, t
 several countries since January 4, 2021. The goal of this project is to explore how a the number of new vaccinations
 varies with respect to other measures over time and across different counties.
   
-### Where the data came from  
-  
 An individual observation corresponds to the number of new covid cases, total number of covid cases, total number of death, and
 other covid, health, and population related metrics for a country in a single day since January 4, 2021. 
   
