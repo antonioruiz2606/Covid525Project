@@ -77,18 +77,14 @@ human_development_index <- covid$human_development_index
 stringency_index <- covid$stringency_index
 percentage_total_deaths <- (covid$total_deaths/covid$population)*100
 perecentage_new_deaths <- (covid$new_deaths/covid$population)*100
-
 temp <- cbind.data.frame(covid$location, covid$population)
 agg <- aggregate(covid$new_deaths, by=list(covid$location), mean)
 for(con in unique(covid$location)) {
   temp[,2][temp[,1] == con] = (agg[,2][agg[,1] == con]/temp[,2][temp[,1] == con][1])*100
 }
 percentage_avg_new_deaths_by_country = temp[,2]
-
 covid_new = cbind.data.frame(date, approx_percentage_new_positive_tests, approx_percentage_total_positve_tests, tests_per_case, percentage_vaccinated, percentage_fully_vaccinated, percentage_new_vaccinated, population_density, percentage_population_over_65, gdp_per_capita, percentage_cardiovascular_death, diabetes_prevalence, hospital_beds_per_100, life_expectancy, human_development_index, stringency_index, percentage_avg_new_deaths_by_country, percentage_total_deaths, perecentage_new_deaths)
-
 show(covid_new)
-
 write.csv(covid_new, "C:/Users/AADAM/Google Drive/Covid525Project/new_covid.csv",row.names= FALSE)
 ```
 
