@@ -57,16 +57,6 @@ for (col in 2:ncol(covid)) {
   }
 }
 ```
-```{r}
-location <- covid$location
-dummy <- covid$total_deaths
-try <- cbind(location,dummy)
-agg = aggregate(covid$new_cases, by=list(covid$location), mean)
-for(con in unique(covid$location)) {
-  try[,2][try[,1] == con] = agg[,2][agg[,1] == con]
-}
-show(try)
-```
 
 ```{r}
 date <- covid$date
@@ -103,5 +93,8 @@ write.csv(covid_new, "C:/Users/AADAM/Google Drive/Covid525Project/new_covid.csv"
 ```
 
 ```{r}
-show(covid_new)
+for (col in 1:ncol(covid_new)) {
+  plot(covid_new[,col], covid_new$perecentage_new_deaths,
+     xlab = colnames(covid_new)[col], ylab = "% New Deaths")
+}
 ```
