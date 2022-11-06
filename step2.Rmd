@@ -45,3 +45,7 @@ hist(covid$total_deaths,
      xlab = "Total Deaths",
      col = "blue")
 ```
+
+```
+show{covid}
+```

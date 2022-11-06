@@ -1,0 +1,107 @@
+---
+title: "Regression Analysis on COVID, Health, and Population Metrics"
+author: "Antonio R, Aditya M, Aadam L, Christopher L"
+fontsize: 12pt
+geometry: "margin=2.54cm,top=1cm"
+mainfont: Times New Roman
+header-includes:
+    - \usepackage{setspace}\singlespacing
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We can answer multiple questions using regression analysis of the covid data.
+The statistical relation between total death in a country and various parameters like vaccination, age, population, etc using regression analysis of the covid dataset.
+For example, We could find the correlation between total death due to Covid in a country and number of vaccinated people.
+
+This dataset includes data on confirmed COVID cases, deaths, hospitalizations, testing, and vaccinations across
+several countries since January 4, 2021. The goal of this project is to explore how a the number of new vaccinations
+varies with respect to other measures over time and across different counties.
+  
+An individual observation corresponds to the number of new covid cases, total number of covid cases, total number of death, and
+other covid, health, and population related metrics for a country in a single day since January 4, 2021. 
+  
+We could select multiple combinations of responses and observations to do a regression, so there doesn't need to be a specific response. However, we will focus on the total number of deaths/cases as well as total number of new deaths/cases
+  
+Our covariates are: days after January 4th, 2021; new tests; total tests; positive rate; tests per case; total vaccinations; people vaccinated; people fully vaccinated; new vaccinations; population; population density; median age; percentage of population aged over 65/70; GPD per capita; cardiovascular death rate; diabetes prevalence; female smokers; male smokers; hospital beds per thousand; life expectancy; human development index; stringency index.
+
+The number of observations is 1107
+
+```{r, echo=FALSE, out.width="50%"}
+covid <- read.csv(file = 'covid.csv')
+hist(covid$new_deaths, 
+     breaks = 20,
+     main = "Fig1: Histogram of New death due to COVID",
+     axes = TRUE,
+     xlab = "New Deaths",
+     col = "blue")
+hist(covid$total_deaths, 
+     breaks = 20,
+     main = "Fig2: Histogram of Total death due to COVID",
+     axes = TRUE,
+     xlab = "Total Deaths",
+     col = "blue")
+```
+```{r}
+show(covid)
+```
+
+```{r}
+for (col in 2:ncol(covid)) {
+  if(col != 11) {
+    plot(covid[,col], covid[,6],
+     xlab = colnames(covid)[col], ylab = "New Deaths")
+  }
+}
+```
+```{r}
+location <- covid$location
+dummy <- covid$total_deaths
+try <- cbind(location,dummy)
+agg = aggregate(covid$new_cases, by=list(covid$location), mean)
+for(con in unique(covid$location)) {
+  try[,2][try[,1] == con] = agg[,2][agg[,1] == con]
+}
+show(try)
+```
+
+```{r}
+date <- covid$date
+approx_percentage_new_positive_tests <- ((covid$new_tests*covid$positive_rate)/covid$population)*100
+approx_percentage_total_positve_tests <- ((covid$total_tests*covid$positive_rate)/covid$population)*100
+tests_per_case <- covid$tests_per_case
+percentage_vaccinated <- (covid$people_vaccinated/covid$population)*100
+percentage_fully_vaccinated <- (covid$people_fully_vaccinated/covid$population)*100
+percentage_new_vaccinated <- (covid$new_vaccinations/covid$population)*100
+population_density <- covid$population_density
+percentage_population_over_65 <- (covid$aged_65_older/covid$population)*100
+gdp_per_capita <- covid$gdp_per_capita
+percentage_cardiovascular_death <- covid$cardiovasc_death_rate/1000
+diabetes_prevalence <- covid$diabetes_prevalence
+hospital_beds_per_100 <- covid$hospital_beds_per_thousand/10
+life_expectancy <- covid$life_expectancy
+human_development_index <- covid$human_development_index
+stringency_index <- covid$stringency_index
+percentage_total_deaths <- (covid$total_deaths/covid$population)*100
+perecentage_new_deaths <- (covid$new_deaths/covid$population)*100
+
+temp <- cbind.data.frame(covid$location, covid$population)
+agg <- aggregate(covid$new_deaths, by=list(covid$location), mean)
+for(con in unique(covid$location)) {
+  temp[,2][temp[,1] == con] = (agg[,2][agg[,1] == con]/temp[,2][temp[,1] == con][1])*100
+}
+percentage_avg_new_deaths_by_country = temp[,2]
+
+covid_new = cbind.data.frame(date, approx_percentage_new_positive_tests, approx_percentage_total_positve_tests, tests_per_case, percentage_vaccinated, percentage_fully_vaccinated, percentage_new_vaccinated, population_density, percentage_population_over_65, gdp_per_capita, percentage_cardiovascular_death, diabetes_prevalence, hospital_beds_per_100, life_expectancy, human_development_index, stringency_index, percentage_avg_new_deaths_by_country, percentage_total_deaths, perecentage_new_deaths)
+
+show(covid_new)
+
+write.csv(covid_new, "C:/Users/AADAM/Google Drive/Covid525Project/new_covid.csv",row.names= FALSE)
+```
+
+```{r}
+show(covid_new)
+```
