@@ -65,61 +65,61 @@ Correlation between the percentage new deaths which is the number of new deaths 
 ### Observation 2
 Correlation between the percentage new deaths which is the number of new deaths as a percentage of the total population and percentage of population vaccinated (one case is fully vaccinated and another in vaccinated with atleast one dose) All aggregated by country/ location.
 
-```{r}
-boxplot(covid_new$perecentage_new_deaths,
-main = "Mean of response: percentage new deaths due to Covid",
-xlab = "Percentage",
-col = "orange",
-border = "brown",
-horizontal = TRUE,
-notch = FALSE
-)
-
-boxplot(covid_new$percentage_vaccinated,
-main = "Mean covariate: percentage vaccinated population",
-xlab = "Percentage",
-col = "orange",
-border = "brown",
-horizontal = TRUE,
-notch = FALSE
-)
-
-boxplot(covid_new$percentage_fully_vaccinated,
-main = "Mean covariate: percentage fully vaccinated population",
-xlab = "Percentage",
-col = "orange",
-border = "brown",
-horizontal = TRUE,
-notch = FALSE
-)
-
-boxplot(agg_new_deaths,
-main = "Mean of response: percentage new deaths due to Covid, Aggregrated by country/ location",
-xlab = "Percentage",
-col = "orange",
-border = "brown",
-horizontal = TRUE,
-notch = FALSE
-)
-
-boxplot(agg_vaccinated_populations,
-main = "Mean covariate: percentage vaccinated population, Aggregrated by country/ location",
-xlab = "Percentage",
-col = "orange",
-border = "brown",
-horizontal = TRUE,
-notch = FALSE
-)
-
-boxplot(agg_fully_vaccinated_population,
-main = "Mean covariate: percentage fully vaccinated population, Aggregrated by country/ location",
-xlab = "Percentage",
-col = "orange",
-border = "brown",
-horizontal = TRUE,
-notch = FALSE
-)
-```
+# ```{r}
+# boxplot(covid_new$perecentage_new_deaths,
+# main = "Mean of response: percentage new deaths due to Covid",
+# xlab = "Percentage",
+# col = "orange",
+# border = "brown",
+# horizontal = TRUE,
+# notch = FALSE
+# )
+# 
+# boxplot(covid_new$percentage_vaccinated,
+# main = "Mean covariate: percentage vaccinated population",
+# xlab = "Percentage",
+# col = "orange",
+# border = "brown",
+# horizontal = TRUE,
+# notch = FALSE
+# )
+# 
+# boxplot(covid_new$percentage_fully_vaccinated,
+# main = "Mean covariate: percentage fully vaccinated population",
+# xlab = "Percentage",
+# col = "orange",
+# border = "brown",
+# horizontal = TRUE,
+# notch = FALSE
+# )
+# 
+# boxplot(agg_new_deaths,
+# main = "Mean of response: percentage new deaths due to Covid, Aggregrated by country/ location",
+# xlab = "Percentage",
+# col = "orange",
+# border = "brown",
+# horizontal = TRUE,
+# notch = FALSE
+# )
+# 
+# boxplot(agg_vaccinated_populations,
+# main = "Mean covariate: percentage vaccinated population, Aggregrated by country/ location",
+# xlab = "Percentage",
+# col = "orange",
+# border = "brown",
+# horizontal = TRUE,
+# notch = FALSE
+# )
+# 
+# boxplot(agg_fully_vaccinated_population,
+# main = "Mean covariate: percentage fully vaccinated population, Aggregrated by country/ location",
+# xlab = "Percentage",
+# col = "orange",
+# border = "brown",
+# horizontal = TRUE,
+# notch = FALSE
+# )
+# ```
 
 ### Summary of response and covariates mean,
 ```{r}
