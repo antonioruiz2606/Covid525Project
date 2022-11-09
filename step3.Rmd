@@ -180,9 +180,9 @@ show(df.p.and.error)
 We can make the following hypothesis test: $H_0: \beta_1 = 0$ and $H_a: \beta1 \neq 0$.
 With the p-value being 0.230, we can conclude that the smallest $\alpha$ for which we can conclude the alternative hypothesis is 0.230. Which simply means that we can say with a confidence of 0.77 that the percent of the total population that died from COVID has a linear relationship with the Human Development index.
 
-### TODO!!
-• A short review of the key takeaways from your initial analyses. How do the analyses relate to the question(s) you
-identified in IE Step 2? Is there any evidence of stronger or weaker relationships than expected?
+###Analysis of Results
+
+To summarize, we started by looking at the regression model between the percentage of the population killed by COVID-19 grouped by country, and the HDI of that country. The resulting model produced a $b_1$ of approximately 0.131 which is not very large. Furthermore, when we plot the regression model against the data in a scatter plot, the regression model does not appear to fit the data very well, due to the large spread in each variable, seemingly irregardless of the other variable's value. However this is not enough to conclude that the HDI does not have a significant effect on percentage of deaths per country. To formally determine the significance of the explanatory variable on the response variable, we conducted a hypothesis test and calculated the p-value of the test, which came out to 0.230. As stated previously, this means that we can say with a confidence of 0.77 that the percent of total population killed by COVID-19 has a linear relationship with the HDI. A confidence of 0.77 will not often be large enough to conclude that HDI alone has a significant impact upon the percentage of deaths, so therefore we are more likely to conclude the opposite. However, as we explore the data further, it may be worth regressing percentage of deaths per country against HDI in conjunction with other covariates, as this might be more likely to yield a statistically significant result.
 
 
 
@@ -365,9 +365,7 @@ pvalue <- 2*pt(-abs(t_stat_b2), df)
 print(pvalue)
 ```
 
+###Analysis of Results
 
-### TODO!!
-• A short review of the key takeaways from your initial analyses. How do the analyses relate to the question(s) you
-identified in IE Step 2? Is there any evidence of stronger or weaker relationships than expected?
-
+Since observation 2 is the aggregate of the data by country, we would expect the variance of the data to decrease in testing the second observation. After looking at the data analysis, we can see that this expectation was correct, as the the variance in the data decreases when we aggregate the data by country rather than looking at each individual observation all together. However, the values of the mean also decrease noticeably when we aggregate the data. The reasoning for this change is likely due to the fact that at most one or two of our countries have significantly larger values for percent deaths, and people vaccinated than other countries, thus the values of the means get skewed towards larger values. However, in the aggregate, there are less larger outlierish observations contributing to the mean so the value of the mean decreases down to a more likely range. When we go to look at the scatterplots of the data, we see that this explanation is likely correct, as you can see the number of data points which are farther from the concentrated center of the graph decreases from non-aggreagted data to aggregated data. However, attempting to fit these scatterplots with a regression model does not appear to yield any useful results because the data is heavily concentrated around the bottom left corner of the graph. This makes it difficult for a line of best fit to beneficial, despite the fact that the plots appear to be triangular in shape with regards to the upper bound on the relationship between vaccinated population and new deaths. A better way to explore this observation could be to instead of aggregate the data by country, analyze each country's data individually with respect to time to see if as more people get vaccinated, less new deaths appear.
 
