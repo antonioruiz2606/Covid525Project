@@ -13,16 +13,14 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-We can answer multiple questions using regression analysis of the covid data. We will focus on new deaths and new positive cases, and we will use total deaths for some exceptions.
-We can analyze the  statistical relation between these and various parameters like new vaccinations, age, population, etc using regression analysis of the covid dataset.
-For example, We could find the correlation between total death due to Covid in a country and number of vaccinated people.
+We can answer multiple questions using regression analysis of the covid data. We will focus on new deaths and new positive cases, and we will use total deaths for some exceptions. We can analyze the statistical relation between these and various parameters like new vaccinations, age, population, etc using regression analysis of the covid dataset. For example, We could find the correlation between total death due to Covid in a country and number of vaccinated people.
 
 This dataset includes data on confirmed COVID cases, deaths, hospitalizations, testing, and vaccinations across several countries since January 4, 2021. The goal of this project is to explore how a the number of new vaccinations varies with respect to other measures over time and across different counties.
-  
-An individual observation corresponds to the number of new covid cases, total number of covid cases, total number of death, and other covid, health, and population related metrics for a country in a single day since January 4, 2021. 
-  
+
+An individual observation corresponds to the number of new covid cases, total number of covid cases, total number of death, and other covid, health, and population related metrics for a country in a single day since January 4, 2021.
+
 We could select multiple combinations of responses and observations to do a regression. The two main responses we will focus on are new deaths and new cases because with this we will be able to predict intervals for deaths and cases on a new day given the covariates. We will also use the total deaths for one specific case.
-  
+
 Our covariates are: days after January 4th, 2021; approximation of new postive tests; total positive tests; tests per case; percentage of the average population that died from COVID; percentage of people vaccinated; percentage of people fully vaccinated; new vaccinations; population density; percentage of population aged over 65/70; GPD per capita; cardiovascular death rate; diabetes prevalence; hospital beds per thousand; life expectancy; human development index; stringency index.
 
 The number of observations is 1107.
@@ -43,7 +41,7 @@ hist(covid$total_deaths,
      col = "blue")
 ```
 
-One of the questions we want to analyze is how the percentage of the population that died from covid correlates to the human development index of a country. 
+One of the questions we want to analyze is how the percentage of the population that died from covid correlates to the human development index of a country.
 
 We also want to find the correlation between new deaths and percentage of vaccinated population, and compare it to new deaths with respect to the percentage of fully vaccinated population.
 
@@ -105,8 +103,8 @@ covid_new = cbind.data.frame(date, location, approx_percentage_new_positive_test
 write.csv(covid_new, "./covid_new.csv",row.names= FALSE)
 ```
 
-
 ## Percentage of Population that Died from COVID With Respect to the Human Development Index
+
 Response: Percentage of Average Population that died from COVID, Covariate: HDI
 
 ```{r}
@@ -177,18 +175,16 @@ df.p.and.error <- data.frame(
 show(df.p.and.error)
 
 ```
-We can make the following hypothesis test: $H_0: \beta_1 = 0$ and $H_a: \beta1 \neq 0$.
-With the p-value being 0.230, we can conclude that the smallest $\alpha$ for which we can conclude the alternative hypothesis is 0.230. Which simply means that we can say with a confidence of 0.77 that the percent of the total population that died from COVID has a linear relationship with the Human Development index.
+
+We can make the following hypothesis test: $H_0: \beta_1 = 0$ and $H_a: \beta1 \neq 0$. With the p-value being 0.230, we can conclude that the smallest $\alpha$ for which we can conclude the alternative hypothesis is 0.230. Which simply means that we can say with a confidence of 0.77 that the percent of the total population that died from COVID has a linear relationship with the Human Development index.
 
 ###Analysis of Results
 
 To summarize, we started by looking at the regression model between the percentage of the population killed by COVID-19 grouped by country, and the HDI of that country. The resulting model produced a $b_1$ of approximately 0.131 which is not very large. Furthermore, when we plot the regression model against the data in a scatter plot, the regression model does not appear to fit the data very well, due to the large spread in each variable, seemingly irregardless of the other variable's value. However this is not enough to conclude that the HDI does not have a significant effect on percentage of deaths per country. To formally determine the significance of the explanatory variable on the response variable, we conducted a hypothesis test and calculated the p-value of the test, which came out to 0.230. As stated previously, this means that we can say with a confidence of 0.77 that the percent of total population killed by COVID-19 has a linear relationship with the HDI. A confidence of 0.77 will not often be large enough to conclude that HDI alone has a significant impact upon the percentage of deaths, so therefore we are more likely to conclude the opposite. However, as we explore the data further, it may be worth regressing percentage of deaths per country against HDI in conjunction with other covariates, as this might be more likely to yield a statistically significant result.
 
-
-
 ## New Deaths with Respect to the Percentage of Vaccinated and Fully Vaccinated Population
-Response: New Deaths, Covariates: Percentage of population that is vaccinated.
-Response: New Deaths, Covariates: Percentage of population that is fully vaccinated.
+
+Response: New Deaths, Covariates: Percentage of population that is vaccinated. Response: New Deaths, Covariates: Percentage of population that is fully vaccinated.
 
 ```{r}
 agg_new_deaths <- aggregate(covid_new$perecentage_new_deaths, by=list(covid_new$location), mean)$x
@@ -197,9 +193,11 @@ agg_vaccinated_populations <- aggregate(covid_new$percentage_vaccinated, by=list
 ```
 
 ### Observation 1
+
 Correlation between the percentage new deaths which is the number of new deaths as a percentage of the total population and percentage of population vaccinated (one case is fully vaccinated and another in vaccinated with atleast one dose).
 
 ### Observation 2
+
 Correlation between the percentage new deaths which is the number of new deaths as a percentage of the total population and percentage of population vaccinated (one case is fully vaccinated and another in vaccinated with atleast one dose) All aggregated by country/ location.
 
 ```{r, echo=FALSE}
@@ -259,6 +257,7 @@ Correlation between the percentage new deaths which is the number of new deaths 
 ```
 
 ### Summary of response and covariates mean,
+
 ```{r}
 print("Summary for observation 1")
 mean(covid_new$perecentage_new_deaths)
@@ -271,6 +270,7 @@ mean(agg_fully_vaccinated_population)
 ```
 
 ### Summary of response and covariates standard deviation,
+
 ```{r}
 print("Summary for observation 1")
 sd(covid_new$perecentage_new_deaths)
@@ -283,6 +283,7 @@ sd(agg_fully_vaccinated_population)
 ```
 
 ### Summary of response and covariates range,
+
 ```{r}
 print("Summary for observation 1")
 range(covid_new$perecentage_new_deaths)
@@ -295,6 +296,7 @@ range(agg_fully_vaccinated_population)
 ```
 
 ### Scatter plots against each covariate,
+
 ```{r}
 print("Summary for observation 1")
 plot(covid_new$percentage_vaccinated, covid_new$perecentage_new_deaths)
@@ -305,6 +307,7 @@ plot(agg_fully_vaccinated_population, agg_new_deaths)
 ```
 
 ### Summary of estimated regression coefficients
+
 ```{r}
 print("Summary for observation 1")
 linmod <- lm(covid_new$perecentage_new_deaths ~ covid_new$percentage_vaccinated + covid_new$percentage_fully_vaccinated)
@@ -318,6 +321,7 @@ print(linmod.2$coefficients)
 ```
 
 ### Summary that includes estimated standard errors
+
 ```{r}
 print("Summary for observation 1")
 hist(summary(linmod)$residual)
@@ -334,6 +338,7 @@ print(sigma(linmod.2)^2)
 ```
 
 ### Summary that includes test results, here we found the p value and t statistic with a null hypothesis of $\beta = 0$
+
 ```{r}
 print("Summary for observation 1")
 n <- nrow(covid_new)
@@ -368,4 +373,3 @@ print(pvalue)
 ###Analysis of Results
 
 Since observation 2 is the aggregate of the data by country, we would expect the variance of the data to decrease in testing the second observation. After looking at the data analysis, we can see that this expectation was correct, as the the variance in the data decreases when we aggregate the data by country rather than looking at each individual observation all together. However, the values of the mean also decrease noticeably when we aggregate the data. The reasoning for this change is likely due to the fact that at most one or two of our countries have significantly larger values for percent deaths, and people vaccinated than other countries, thus the values of the means get skewed towards larger values. However, in the aggregate, there are less larger outlierish observations contributing to the mean so the value of the mean decreases down to a more likely range. When we go to look at the scatterplots of the data, we see that this explanation is likely correct, as you can see the number of data points which are farther from the concentrated center of the graph decreases from non-aggreagted data to aggregated data. However, attempting to fit these scatterplots with a regression model does not appear to yield any useful results because the data is heavily concentrated around the bottom left corner of the graph. This makes it difficult for a line of best fit to beneficial, despite the fact that the plots appear to be triangular in shape with regards to the upper bound on the relationship between vaccinated population and new deaths. A better way to explore this observation could be to instead of aggregate the data by country, analyze each country's data individually with respect to time to see if as more people get vaccinated, less new deaths appear.
-

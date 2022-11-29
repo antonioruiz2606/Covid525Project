@@ -1,0 +1,114 @@
+---
+title: "Regression Analysis on COVID, Health, and Population Metrics"
+author: "Antonio R, Aditya M, Aadam L, Christopher L"
+fontsize: 12pt
+geometry: "margin=2.54cm,top=1cm"
+mainfont: Times New Roman
+header-includes:
+    - \usepackage{setspace}\singlespacing
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, out.width="50%"}
+covid <- read.csv(file = 'covid.csv')
+```
+
+```{r}
+
+covid_new = read.csv(file='covid_new.csv')
+
+agg_pop_death_percentage = aggregate(
+    x = covid_new$percentage_total_deaths, 
+    by = list(covid_new$location), 
+    FUN = mean
+  )
+
+agg_hdi = aggregate(
+    x = covid_new$human_development_index, 
+    by = list(covid_new$location), 
+    FUN = mean
+  )
+```
+
+```{r}
+
+pop_death_per_country <- agg_pop_death_percentage$x
+hdi <- agg_hdi$x
+
+linmod <- lm(pop_death_per_country~hdi)
+b0 <- linmod$coef[1]
+b1 <- linmod$coef[2]
+
+Yhat <- linmod$fitted.values
+e <- resid(linmod)
+plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+abline(h = 0, lty = 3)
+```
+
+```{r}
+Yhat <- linmod$fitted.values
+e <- resid(linmod)
+plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+abline(h = 0, lty = 3)
+```
+
+```{r}
+e <- resid(linmod)
+par(mfrow=c(1,3))
+plot(hdi, e)
+hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
+qqnorm(e, pch = 1, frame = FALSE)
+qqline(e, col = "steelblue", lwd = 2)
+```
+
+```{r}
+linmod2 <- lm(covid_new$perecentage_new_deaths ~ covid_new$percentage_vaccinated + covid_new$percentage_fully_vaccinated)
+b0 <- linmod2$coef[1]
+b1 <- linmod2$coef[2]
+b2 <- linmod2$coef[3]
+
+Yhat <- linmod2$fitted.values
+e <- resid(linmod2)
+plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+abline(h = 0, lty = 3)
+```
+
+```{r}
+e <- resid(linmod2)
+par(mfrow=c(2,2))
+plot(covid_new$percentage_vaccinated, e)
+plot(covid_new$percentage_fully_vaccinated, e)
+hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
+qqnorm(e, pch = 1, frame = FALSE)
+qqline(e, col = "steelblue", lwd = 2)
+```
+
+```{r}
+agg_new_deaths <- aggregate(covid_new$perecentage_new_deaths, by=list(covid_new$location), mean)$x
+agg_fully_vaccinated_population <- aggregate(covid_new$percentage_fully_vaccinated, by=list(covid_new$location), mean)$x
+agg_vaccinated_populations <- aggregate(covid_new$percentage_vaccinated, by=list(covid_new$location), mean)$x
+
+linmod.2 <- lm(agg_new_deaths ~ agg_vaccinated_populations + agg_fully_vaccinated_population)
+b0 <- linmod.2$coef[1]
+b1 <- linmod.2$coef[2]
+b2 <- linmod.2$coef[3]
+
+Yhat <- linmod.2$fitted.values
+e <- resid(linmod.2)
+plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+abline(h = 0, lty = 3)
+```
+
+```{r}
+e <- resid(linmod.2)
+par(mfrow=c(2,2))
+plot(agg_fully_vaccinated_population, e)
+plot(agg_vaccinated_populations, e)
+hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
+qqnorm(e, pch = 1, frame = FALSE)
+qqline(e, col = "steelblue", lwd = 2)
+```
