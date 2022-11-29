@@ -50,16 +50,16 @@ abline(h = 0, lty = 3)
 ```
 
 ```{r}
-Yhat <- linmod$fitted.values - b0
+Y1 <- linmod$fitted.values - b0
 e <- resid(linmod)
-plot(Yhat,e, xlab = expression('Y_i - b_0'),ylab="residual e", pch = 16)
+plot(pop_death_per_country, Y1, xlab ="% Population of Death per Country" ,ylab=expression('Y_i - b_0'), pch = 16)
 abline(h = 0, lty = 3)
 ```
 
 ```{r}
 e <- resid(linmod)
 par(mfrow=c(1,3))
-plot(hdi, e)
+plot(hdi, e, xlab="HDI")
 hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
 qqnorm(e, pch = 1, frame = FALSE)
 qqline(e, col = "steelblue", lwd = 2)
@@ -81,18 +81,18 @@ abline(h = 0, lty = 3)
 Y1 <- covid_new$perecentage_new_deaths - b0 - b1*covid_new$percentage_vaccinated
 e <- resid(linmod2)
 par(mfrow=c(1,2))
-plot(covid_new$percentage_fully_vaccinated,Y1, xlab = expression('percentage_fully_vaccinated'),ylab='Y_i - b_0 - b1 * percentage_vaccinated', pch = 16)
+plot(covid_new$percentage_fully_vaccinated,Y1, xlab = expression('% of People Fully Vaccinated'),ylab='Y_i - b_0 - b1 * % of People Vaccinated', pch = 16)
 abline(h = 0, lty = 3)
 Y2 <- covid_new$perecentage_new_deaths - b0 - b2*covid_new$percentage_fully_vaccinated
-plot(covid_new$percentage_vaccinated, Y2, xlab = expression('percentage_vaccinated'),ylab='Y_i - b_0 - b2 * percentage_fully_vaccinated', pch = 16)
+plot(covid_new$percentage_vaccinated, Y2, xlab = expression('% of People Vaccinated'),ylab='Y_i - b_0 - b2 * % of People Fully Vaccinated', pch = 16)
 abline(h = 0, lty = 3)
 ```
 
 ```{r}
 e <- resid(linmod2)
 par(mfrow=c(2,2))
-plot(covid_new$percentage_vaccinated, e)
-plot(covid_new$percentage_fully_vaccinated, e)
+plot(covid_new$percentage_vaccinated, e, xlab="% of People Vaccinated")
+plot(covid_new$percentage_fully_vaccinated, e, xlab="% of People Fully Vaccinated")
 hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
 qqnorm(e, pch = 1, frame = FALSE)
 qqline(e, col = "steelblue", lwd = 2)
@@ -117,19 +117,18 @@ abline(h = 0, lty = 3)
 ```{r}
 Y1 <- agg_new_deaths - b0 - b1*agg_vaccinated_populations
 e <- resid(linmod2)
-par(mfrow=c(1,2))
-plot(agg_new_deaths,Y1, xlab = expression('agg_fully_vaccinated_population'),ylab='Y_i - b_0 - b1 * agg_vaccinated_populations', pch = 16)
+plot(agg_new_deaths,Y1, xlab = expression('Aggrigated % of People Fully Vaccinated Population'),ylab='Y_i - b_0 - b1 * Aggrigated % of People Vaccinated Populations', pch = 16)
 abline(h = 0, lty = 3)
 Y2 <- agg_new_deaths - b0 - b2*agg_fully_vaccinated_population
-plot(agg_new_deaths, Y2, xlab = expression('agg_vaccinated_populations'),ylab='Y_i - b_0 - b2 * agg_fully_vaccinated_population', pch = 16)
+plot(agg_new_deaths, Y2, xlab = expression('Aggrigated % of People Vaccinated Populations'),ylab='Y_i - b_0 - b2 * Aggrigated % of People Fully Vaccinated Population', pch = 16)
 abline(h = 0, lty = 3)
 ```
 
 ```{r}
 e <- resid(linmod.2)
 par(mfrow=c(2,2))
-plot(agg_fully_vaccinated_population, e)
-plot(agg_vaccinated_populations, e)
+plot(agg_fully_vaccinated_population, e, xlab="Aggrigated % of People Fully Vaccinated Population")
+plot(agg_vaccinated_populations, e, xlab="Aggrigated % of People Vaccinated Population")
 hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
 qqnorm(e, pch = 1, frame = FALSE)
 qqline(e, col = "steelblue", lwd = 2)
