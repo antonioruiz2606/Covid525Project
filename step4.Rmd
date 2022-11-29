@@ -78,9 +78,13 @@ There are no specific regions in the graph with a majority of positive or negati
 
 The QQ-Plot allows us to visualize the normality of the errors from the data. There is a moderete violation of normality in the QQ-Plot since the data is relatively evenly spread out accross the line, when more points should be centered in the middle of the line. The tails also strafe from the line.
 
+<<<<<<< Updated upstream
 ## Evaluating The Model 2
 
 The validity of the previous analysis depends on the assumptions we have made by using a regression model, so we need to verify which assumptions we violate.
+=======
+### Review of Key Takeaways
+>>>>>>> Stashed changes
 
 ```{r}
 linmod2 <- lm(covid_new$perecentage_new_deaths ~ covid_new$percentage_vaccinated + covid_new$percentage_fully_vaccinated)
