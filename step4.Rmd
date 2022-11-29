@@ -50,9 +50,9 @@ abline(h = 0, lty = 3)
 ```
 
 ```{r}
-Yhat <- linmod$fitted.values
+Yhat <- linmod$fitted.values - b0
 e <- resid(linmod)
-plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+plot(Yhat,e, xlab = expression('Y_i - b_0'),ylab="residual e", pch = 16)
 abline(h = 0, lty = 3)
 ```
 
@@ -74,6 +74,17 @@ b2 <- linmod2$coef[3]
 Yhat <- linmod2$fitted.values
 e <- resid(linmod2)
 plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+abline(h = 0, lty = 3)
+```
+
+```{r}
+Y1 <- covid_new$perecentage_new_deaths - b0 - b1*covid_new$percentage_vaccinated
+e <- resid(linmod2)
+par(mfrow=c(1,2))
+plot(covid_new$percentage_fully_vaccinated,Y1, xlab = expression('percentage_fully_vaccinated'),ylab='Y_i - b_0 - b1 * percentage_vaccinated', pch = 16)
+abline(h = 0, lty = 3)
+Y2 <- covid_new$perecentage_new_deaths - b0 - b2*covid_new$percentage_fully_vaccinated
+plot(covid_new$percentage_vaccinated, Y2, xlab = expression('percentage_vaccinated'),ylab='Y_i - b_0 - b2 * percentage_fully_vaccinated', pch = 16)
 abline(h = 0, lty = 3)
 ```
 
@@ -100,6 +111,17 @@ b2 <- linmod.2$coef[3]
 Yhat <- linmod.2$fitted.values
 e <- resid(linmod.2)
 plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+abline(h = 0, lty = 3)
+```
+
+```{r}
+Y1 <- agg_new_deaths - b0 - b1*agg_vaccinated_populations
+e <- resid(linmod2)
+par(mfrow=c(1,2))
+plot(agg_new_deaths,Y1, xlab = expression('agg_fully_vaccinated_population'),ylab='Y_i - b_0 - b1 * agg_vaccinated_populations', pch = 16)
+abline(h = 0, lty = 3)
+Y2 <- agg_new_deaths - b0 - b2*agg_fully_vaccinated_population
+plot(agg_new_deaths, Y2, xlab = expression('agg_vaccinated_populations'),ylab='Y_i - b_0 - b2 * agg_fully_vaccinated_population', pch = 16)
 abline(h = 0, lty = 3)
 ```
 
