@@ -235,3 +235,25 @@ The QQ-Plot allows us to visualize the normality of the errors from the data. Th
 ### Suggested transformation
 
 Here we don't require a lot or any transformation cause most, if not all, assumptions are not violated.
+
+### Review of Key Takeaways
+
+Our original goal was to determine whether there existed a causal relationship between certain predictor variables such as percentage of population vaccinated, and percentage of new 
+deaths. We hypothesized that the percentage of new deaths on any given day would decrease if the percentage of the population vaccinated was higher. After our preliminary analysis we 
+found that there did exist a relationship between these two variables, so the next question to answer was whether the relationship could be represented with a linear model, and to do this
+we took a closer look at the variance of the residuals of a proposed linear model. We immediately noticed that variance was not evenly spread throughout the model and that linearity of 
+residuals was not respected. However we suggested that a better fix would be to aggregate the data by country so as to eliminate the congestion of residuals in the left side of the plots,
+and after doing so we found that the congestion significantly decreased, but the the skewed right residuals disappeared, likely a result of the aggregation without respecting the factor
+of time. Putting this aside, we continued to analyze the residuals of our regression model to see if they respected the assumptions we must make in order for a linear model to properly 
+fit the data. Starting with the residuals against fitted values plot, we can see that there is this dense section of points in the center of the graph, which was to be expected seeing as 
+the model closely fit a large section of the data points found in our previous graphs. However it is still very evident that the variance of the residuals is not evenly spread or 
+consistent through the graph, which would suggest that we should either use a variable transformation to better visualize the data or aggregate the data. We tried both options and noticed
+that both suggestions gave us data that better respected the assumptions of a linear model. In the aggregated by country data, the congestion disappeared, but so did the spread, so this
+approach, as suggest previously was not ideal. However, using a variable transformation made the congestion spread out, thus fixing both the spread and equality of variance considerably. 
+The transformed data still shows some signs of incorrect assumptions, but they are not nearly as egregious as they were before the transformation. Moving on, we looked at percentage of 
+population (fully) vaccinated against percentage of new deaths, and analyzed how well each of these variables did at predicting the percentage of new deaths if we assumed that all other 
+variables in the model were held constant, meaning we assumed that each other variable had a fixed contribution in the model. we can see from these plots that the data is heavily 
+congested on the left, but appears to follow a linear trend as it moves right. This indicates that the residuals in these plots are not very linear, and so another variable transformation
+may be required to better analyze the data. We applied the same variable transformation we used previously to this data and found that the non-linear trend still persisted, but the 
+visible slopes extending right across the plots are not as sharp as they used to be. This indicates that maybe a stronger variable transformation might be a better fix instead. Overall we
+concluded that for the given data and variables, a linear model might not be the best approach, but it is also not the worst approach either.
