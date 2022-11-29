@@ -74,7 +74,7 @@ For this regression model, the HDIs are clearly independent from each other sinc
 
 ### Equal variance
 
-We are also assuming equal variance in our regression model. From the residuals against the fitted values plot, we can see that they make a fan-shape, clearly, there isn't a consistent vertical spread throughout the graph. There is a moderate violation of equal variance due to this inconsistent spread.
+We are also assuming equal variance in our regression model. From the residuals against the fitted values plot, we can see that they make a fan-shape, clearly, there isn't a consistent vertical spread throughout the graph. There is a moderate violation of equal variance due to this inconsistent spread. I would not suggest any transformation for the graphs, horizontally, points are evenly spread and there also aren't any outliers, which helps. For the residual against fitted values graph, using $e^{X_1}$ might help with the point concentration for higher values of $X_1$, but this really is a minor adjustment, the equal variance violation is still visible.
 
 ### Linearlity
 
