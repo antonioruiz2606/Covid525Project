@@ -34,7 +34,7 @@ agg_hdi = aggregate(
   )
 ```
 
-### Evaluating The Model
+## Evaluating The Model 1
 
 The validity of the previous analysis depends on the assumptions we have made by using a regression model, so we need to verify which assumptions we violate.
 
@@ -84,6 +84,10 @@ There are no specific regions in the graph with a majority of positive or negati
 
 The QQ-Plot allows us to visualize the normality of the errors from the data. There is a moderete violation of normality in the QQ-Plot since the data is relatively evenly spread out accross the line, when more points should be centered in the middle of the line. The tails also strafe from the line.
 
+## Evaluating The Model 2
+
+The validity of the previous analysis depends on the assumptions we have made by using a regression model, so we need to verify which assumptions we violate.
+
 ```{r}
 linmod2 <- lm(covid_new$perecentage_new_deaths ~ covid_new$percentage_vaccinated + covid_new$percentage_fully_vaccinated)
 b0 <- linmod2$coef[1]
@@ -117,6 +121,29 @@ qqnorm(e, pch = 1, frame = FALSE)
 qqline(e, col = "steelblue", lwd = 2)
 ```
 
+### Independence
+
+For this regression model, the % of People fully Vaccinated and % of People Vaccinated is independent to % of new deaths. This is because the % of vaccinated is not grouped/ aggregated by country thus there are multiple points for a single country at different day's which are making the dependence to each other very difficult. Thus the relation between the residual error is quite independent.
+Therefore we are not violating the independence assumption of regression models.
+
+### Equal variance
+
+We are also assuming equal variance in our regression model. From the residuals against the fitted values plot, we can see that they make a cone-shape, clearly, there isn't a consistent vertical spread throughout the graph. There is a huge violation of equal variance due to this inconsistent spread.
+
+### Linearlity
+
+There are specific regions in the graph with a majority of positive or negative residuals, therefore the model does under-predict or over-predict in a region, indicating that the data tends to be non-linear. The same can be said from the $Y_i-b_0$ against % Population of Death
+
+In the case of $Y_i - b_0 - b_1$ * % of People Vaccinated there is significant over predication when the % of People fully Vaccinated increases and in the case of  $Y_i - b_0 - b_2$ * % of People Fully Vaccinated there is significant under predication when the % of People fully Vaccinated increase
+
+### Normality
+
+The QQ-Plot allows us to visualize the normality of the errors from the data. There is a significant tail violation of normality in the QQ-Plot since the data is relatively evenly spread out across the line, when more points should be centered in the middle of the line. The tails also strafe from the line.
+
+## Evaluating The Model 3
+
+The validity of the previous analysis depends on the assumptions we have made by using a regression model, so we need to verify which assumptions we violate.
+
 ```{r}
 agg_new_deaths <- aggregate(covid_new$perecentage_new_deaths, by=list(covid_new$location), mean)$x
 agg_fully_vaccinated_population <- aggregate(covid_new$percentage_fully_vaccinated, by=list(covid_new$location), mean)$x
@@ -135,7 +162,8 @@ abline(h = 0, lty = 3)
 
 ```{r}
 Y1 <- agg_new_deaths - b0 - b1*agg_vaccinated_populations
-e <- resid(linmod2)
+par(mfrow=c(1,2))
+e <- resid(linmod.2)
 plot(agg_new_deaths,Y1, xlab = expression('Aggrigated % of People Fully Vaccinated Population'),ylab='Y_i - b_0 - b1 * Aggrigated % of People Vaccinated Populations', pch = 16)
 abline(h = 0, lty = 3)
 Y2 <- agg_new_deaths - b0 - b2*agg_fully_vaccinated_population
@@ -152,3 +180,20 @@ hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", fre
 qqnorm(e, pch = 1, frame = FALSE)
 qqline(e, col = "steelblue", lwd = 2)
 ```
+
+### Independence
+
+For this regression model, the % of People fully Vaccinated and % of People Vaccinated might be dependent to % of new deaths. This is because the % of vaccinated is grouped/ aggregated by country thus there is a point for a single country. And via the graph, the % of People fully Vaccinated and % of People Vaccinated have dependence to % of new deaths thus affecting the relation between the residual errors (Showing a dependence). Therefore we might be violating the independence assumption of regression models.
+
+### Equal variance
+
+We are also assuming equal variance in our regression model. From the residuals against the fitted values plot, we can see that they make a thin diamond shape, clearly, there is a consistent vertical spread throughout the graph. There is no violation of equal variance due to this consistent spread.
+
+### Linearlity
+
+There are no specific regions in the graph with a majority of positive or negative residuals, therefore the model doesn't exclusively under-predict or over-predict in a region, indicating that the data tends to be linear. The same can be said from the $Y_i - b_0 - b_1$ * % of People Vaccinated against % Population of Death and $Y_i - b_0 - b_2$ * % of People Fully Vaccinated against % Population of Death
+
+### Normality
+
+The QQ-Plot allows us to visualize the normality of the errors from the data. There is a no tail violation of normality in the QQ-Plot since the data is relatively evenly spread out across the line. The tails don't strafe much from the line. And the distribution is not "compacted" on the ends. The quantiles from residuals distribution almost match quantiles from a normal distribution.
+Thus assumption of normality is not violated.
