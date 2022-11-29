@@ -34,6 +34,10 @@ agg_hdi = aggregate(
   )
 ```
 
+### Evaluating The Model
+
+The validity of the previous analysis depends on the assumptions we have made by using a regression model, so we need to verify which assumptions we violate.
+
 ```{r}
 
 pop_death_per_country <- agg_pop_death_percentage$x
@@ -48,7 +52,6 @@ e <- resid(linmod)
 plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
 abline(h = 0, lty = 3)
 ```
-
 ```{r}
 Y1 <- linmod$fitted.values - b0
 e <- resid(linmod)
@@ -64,6 +67,22 @@ hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", fre
 qqnorm(e, pch = 1, frame = FALSE)
 qqline(e, col = "steelblue", lwd = 2)
 ```
+
+### Independence
+
+For this regression model, the HDIs are clearly independent from each other since we have a single data point for each country in the dataset. Therefore we are not violating the independence assumption of regression models.
+
+### Equal variance
+
+We are also assuming equal variance in our regression model. From the residuals against the fitted values plot, we can see that they make a fan-shape, clearly, there isn't a consistent vertical spread throughout the graph. There is a moderate violation of equal variance due to this inconsistent spread.
+
+### Linearlity
+
+There are no specific regions in the graph with a majority of positive or negative residuals, therefore the model doesn't exclusively underpredict or overpredict in a region, indicating that the data tends to be linear. The same can be said from the $Y_i-b_0$ against % Population of Death per Country
+
+### Normality
+
+The QQ-Plot allows us to visualize the normality of the errors from the data. There is a moderete violation of normality in the QQ-Plot since the data is relatively evenly spread out accross the line, when more points should be centered in the middle of the line. The tails also strafe from the line.
 
 ```{r}
 linmod2 <- lm(covid_new$perecentage_new_deaths ~ covid_new$percentage_vaccinated + covid_new$percentage_fully_vaccinated)
