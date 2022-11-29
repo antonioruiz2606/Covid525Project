@@ -140,6 +140,34 @@ In the case of $Y_i - b_0 - b_1$ * % of People Vaccinated there is significant o
 
 The QQ-Plot allows us to visualize the normality of the errors from the data. There is a significant tail violation of normality in the QQ-Plot since the data is relatively evenly spread out across the line, when more points should be centered in the middle of the line. The tails also strafe from the line.
 
+### Suggested transformation
+
+transform $X_{1} -> X_{1}^{2}$ and $X_{2} -> X_{2}^{1/2}$
+```{r}
+linmod2.modify <- lm(covid_new$perecentage_new_deaths ~ I(covid_new$percentage_vaccinated ^ 2) + I(covid_new$percentage_fully_vaccinated ^ 0.5))
+e.square <- linmod2.modify$residuals
+Y.hat.square <- linmod2.modify$fitted.values
+plot(Y.hat.square, e.square, pch = 16, xlab = "Fitted Values", ylab = "Residuals",
+main = "Modified Model", cex=0.5, cex.lab=0.5, cex.axis=0.5, cex.main=0.5)
+abline(h = 0, lty = 3)
+```
+
+```{r}
+b0.modify <- linmod2.modify$coef[1]
+b1.modify <- linmod2.modify$coef[2]
+b2.modify <- linmod2.modify$coef[3]
+Y <- covid_new$perecentage_new_deaths
+par(mfrow = c(1, 2))
+plot(covid_new$percentage_vaccinated^2, Y - b0.modify - b2.modify*(covid_new$percentage_fully_vaccinated^(1/2)), pch = 16, xlab = "Squared % of People Vaccinated",
+ylab = expression(Y-b[0]-b[2]*X[2]^(1/2)), main = "Modified Model",
+cex=0.5, cex.lab=0.5, cex.axis=0.5, cex.main=0.5)
+abline(a = 0, b = b1.modify, col = "blue")
+plot(covid_new$percentage_fully_vaccinated^(1/2), Y - b0.modify - b1.modify*covid_new$percentage_vaccinated^2, pch = 16, xlab = "Root % of People Fully Vaccinated",
+ylab = expression(Y-b[0]-b[1]*X[1]^2), main = "Modified Model",
+cex=0.5, cex.lab=0.5, cex.axis=0.5, cex.main=0.5)
+abline(a = 0, b = b2.modify, col = "blue")
+```
+
 ## Evaluating The Model 3
 
 The validity of the previous analysis depends on the assumptions we have made by using a regression model, so we need to verify which assumptions we violate.
@@ -197,3 +225,7 @@ There are no specific regions in the graph with a majority of positive or negati
 
 The QQ-Plot allows us to visualize the normality of the errors from the data. There is a no tail violation of normality in the QQ-Plot since the data is relatively evenly spread out across the line. The tails don't strafe much from the line. And the distribution is not "compacted" on the ends. The quantiles from residuals distribution almost match quantiles from a normal distribution.
 Thus assumption of normality is not violated.
+
+### Suggested transformation
+
+Here we don't require a lot or any transformation cause most, if not all, assumptions are not violated. 
