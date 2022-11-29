@@ -52,12 +52,6 @@ e <- resid(linmod)
 plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
 abline(h = 0, lty = 3)
 ```
-```{r}
-Y1 <- linmod$fitted.values - b0
-e <- resid(linmod)
-plot(pop_death_per_country, Y1, xlab ="% Population of Death per Country" ,ylab=expression('Y_i - b_0'), pch = 16)
-abline(h = 0, lty = 3)
-```
 
 ```{r}
 e <- resid(linmod)
