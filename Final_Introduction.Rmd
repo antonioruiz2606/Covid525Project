@@ -1,0 +1,289 @@
+---
+title: "Regression Analysis on COVID-19, Health, and Population Metrics"
+author: "Antonio R, Aditya M, Aadam L, Christopher L"
+fontsize: 12pt
+output:
+  html_document:
+    df_print: paged
+mainfont: Times New Roman
+header-includes: \usepackage{setspace}\singlespacing
+geometry: margin=2.54cm,top=1cm
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For this analysis we are investigating a COVID-19 data set that was provided to us from class. We are essentially using linear regression models to find patterns that give us an insight into some relationships of the variables in the data set. These linear regression models will, on a high level, fit lines and curves of best fit to the data. After we gather the results from these models we interpret their importance, as well as their validity. Linear models come with some assumptions, so to test their validity we need to show that it is not incorrect to make these assumptions given this data set.
+
+We can answer multiple questions through a regression analysis of the COVID-19 data. - One of the questions we want to analyze is how the percentage of the population that died from COVID-19 in a country interacts with that country's human development index (HDI). - We also want to find what is the relationship between new deaths and percentage of vaccinated population, and compare it to new deaths with respect to the percentage of fully vaccinated population.
+
+The dataset we are using includes data on confirmed COVID cases, deaths, hospitalizations, testing, vaccinations, and other metrics across several countries since January 4, 2021. Our goal is to answer the previous questions by leveraging this data set.
+
+An individual observation in the data (a row) corresponds to the number of new covid cases, total number of covid cases, total number of death, and other covid, health, and population related metrics for a country in a single day since January 4, 2021. Our dataset has 1107 observations.
+
+Our responses (dependent variables) are the variables we want to find more about, in our case, these will be the percentage of population that died from COVID-19 in a country, and new COVID-19 deaths.
+
+Our covariates (independent variables) are the variables we will analyze with our responses to get further insight into the relationships we want to analyze: To analyze the percentage of population that died from COVID-19 in a country we will use HDI as a covariate. To analyze the number of new deaths, we will use the percentage of vaccinated population and the percentage of fully vaccinated population as covariates.
+
+Some of our covariates are not in the original dataset, we will manipulate the dataset by aggregating, multiplying, and dividing data to get our responses and covariates:
+
+```{r}
+location <- covid$location
+
+date <- covid$date
+
+approx_percentage_new_positive_tests <- ((covid$new_tests*covid$positive_rate)/covid$population)*100
+
+approx_percentage_total_positve_tests <- ((covid$total_tests*covid$positive_rate)/covid$population)*100
+
+tests_per_case <- covid$tests_per_case
+
+percentage_vaccinated <- (covid$people_vaccinated/covid$population)*100
+
+percentage_fully_vaccinated <- (covid$people_fully_vaccinated/covid$population)*100
+
+percentage_new_vaccinated <- (covid$new_vaccinations/covid$population)*100
+
+population_density <- covid$population_density
+
+percentage_population_over_65 <- (covid$aged_65_older/covid$population)*100
+
+gdp_per_capita <- covid$gdp_per_capita
+
+percentage_cardiovascular_death <- covid$cardiovasc_death_rate/1000
+
+diabetes_prevalence <- covid$diabetes_prevalence
+
+hospital_beds_per_100 <- covid$hospital_beds_per_thousand/10
+
+life_expectancy <- covid$life_expectancy
+
+human_development_index <- covid$human_development_index
+
+stringency_index <- covid$stringency_index
+
+percentage_total_deaths <- (covid$total_deaths/covid$population)*100
+
+perecentage_new_deaths <- (covid$new_deaths/covid$population)*100
+
+temp <- cbind.data.frame(covid$location, covid$population)
+
+agg <- aggregate(covid$new_deaths, by=list(covid$location), mean)
+
+for(con in unique(covid$location)) {
+  temp[,2][temp[,1] == con] = (agg[,2][agg[,1] == con]/temp[,2][temp[,1] == con][1])*100
+}
+
+percentage_avg_new_deaths_by_country = temp[,2]
+
+# Here we are creating the new csv and dataframe covid_new using the previous variables.
+covid_new = cbind.data.frame(date, location, approx_percentage_new_positive_tests, approx_percentage_total_positve_tests, tests_per_case, percentage_vaccinated, percentage_fully_vaccinated, percentage_new_vaccinated, population_density, percentage_population_over_65, gdp_per_capita, percentage_cardiovascular_death, diabetes_prevalence, hospital_beds_per_100, life_expectancy, human_development_index, stringency_index, percentage_avg_new_deaths_by_country, percentage_total_deaths, perecentage_new_deaths)
+write.csv(covid_new, "./covid_new.csv",row.names= FALSE)
+```
+
+## Model 1: Percentage of Population that Died from COVID With Respect to the Human Development Index
+
+Response: Percentage of Average Population that died from COVID in a country, Covariate: Country's HDI
+
+Here we aggregate the data, remember, the data set includes data for each day after the mentioned date, so we need to aggregate these over each country.
+
+```{r}
+covid_new = read.csv(file='covid_new.csv')
+agg_pop_death_percentage = aggregate(
+    x = covid_new$percentage_total_deaths, 
+    by = list(covid_new$location), 
+    FUN = mean
+  )
+agg_hdi = aggregate(
+    x = covid_new$human_development_index, 
+    by = list(covid_new$location), 
+    FUN = mean
+  )
+```
+
+Here we create the model, and fit our regression line (line of best fit).
+
+```{r}
+pop_death_per_country <- agg_pop_death_percentage$x
+hdi <- agg_hdi$x
+linmod <- lm(pop_death_per_country~hdi)
+b0 <- linmod$coef[1]
+b1 <- linmod$coef[2]
+df.y <- data.frame(
+  "Mean percentage of dead population" = mean(pop_death_per_country),
+  "Standard Deviation of percentage of dead population" = sd(pop_death_per_country),
+  "Minimum percentage of dead population" = min(pop_death_per_country),
+  "Maximum percentage of dead population" = max(pop_death_per_country)
+)
+show(df.y)
+df.x <- data.frame(
+  "b0" = b0,
+  "b1" = b1,
+  "Mean HDI" = mean(hdi),
+  "Standard Deviation of HDI" = sd(hdi),
+  "Minimum HDI" = min(hdi),
+  "Maximum HDI" = max(hdi)
+)
+show(df.x)
+```
+
+Here we graph our response with our covariate and the line of best fit from the model.
+
+```{r}
+plot(hdi, pop_death_per_country, main="Figure 1: Total Population Death % and HDI", xlab="HDI", ylab="Total Population Death %")
+abline(b0, b1, col="blue")
+```
+
+Here is some more data on our model.
+
+```{r}
+standard.error <- summary(linmod)$coef[2,2]
+p.value <- summary(linmod)$coef[2,4]
+df.p.and.error <- data.frame(
+  "Standard Error" = standard.error,
+  "P Value" = p.value
+)
+show(df.p.and.error)
+```
+
+We will also make a boxplot of the reponse and covariate to identify outliers.
+
+```{r}
+par(mfrow=c(1,2))
+boxplot(hdi, main="Figure 2: HDI", horizontal=TRUE)
+boxplot(pop_death_per_country, main="Fig 3: Total Population Death %", horizontal=TRUE)
+```
+
+From these boxplots we can identify no outliers for the country total population death percentage, and only 4 outliers for the HDI, we still need to consider these in our analyisis since they give us valuable information.
+
+## Models 2 and 3: New Deaths with Respect to the Percentage of Vaccinated and Fully Vaccinated Population
+
+Response: New Deaths, Covariate: Percentage of population that is vaccinated. Response: New Deaths, Covariate: Percentage of population that is fully vaccinated.
+
+Similar to Model 1, we can aggregate the data by country, but in this case we can analyze both the aggregated and non-aggregated "raw" variables.
+
+```{r}
+agg_new_deaths <- aggregate(covid_new$perecentage_new_deaths, by=list(covid_new$location), mean)$x
+agg_fully_vaccinated_population <- aggregate(covid_new$percentage_fully_vaccinated, by=list(covid_new$location), mean)$x
+agg_vaccinated_populations <- aggregate(covid_new$percentage_vaccinated, by=list(covid_new$location), mean)$x
+```
+
+### Observation 1
+
+Correlation between the percentage new deaths which is the number of new deaths as a percentage of the total population and percentage of population vaccinated (one case is fully vaccinated and another in vaccinated with at least one dose).
+
+### Observation 2
+
+Correlation between the percentage new deaths which is the number of new deaths as a percentage of the total population and percentage of population vaccinated (one case is fully vaccinated and another in vaccinated with at least one dose) All aggregated by country/ location.
+
+We can graph the boxplot of all of the variables we will use for these models to identify outliers.
+
+```{r, echo=FALSE}
+par(mfrow=c(2,1))
+boxplot(covid_new$perecentage_new_deaths,
+main = "Fig 4: Percentage new deaths",
+xlab = "Percentage",
+horizontal = TRUE,
+notch = FALSE
+)
+
+boxplot(covid_new$percentage_vaccinated,
+main = "Fig 5: Percentage vaccinated population",
+xlab = "Percentage",
+horizontal = TRUE,
+notch = FALSE
+)
+
+boxplot(covid_new$percentage_fully_vaccinated,
+main = "Fig 6: Percentage fully vaccinated population",
+xlab = "Percentage",
+horizontal = TRUE,
+notch = FALSE
+)
+
+boxplot(agg_new_deaths,
+main = "Fig 7: Aggregated Percentage new deaths due to Covid",
+xlab = "Percentage",
+horizontal = TRUE,
+notch = FALSE
+)
+
+boxplot(agg_vaccinated_populations,
+main = "Fig 8: Aggregated percentage vaccinated population",
+xlab = "Percentage",
+horizontal = TRUE,
+notch = FALSE
+)
+
+boxplot(agg_fully_vaccinated_population,
+main = "Fig 9: Aggregated percentage fully vaccinated population",
+xlab = "Percentage",
+horizontal = TRUE,
+notch = FALSE
+)
+```
+
+We can see why aggregating the data is good approach. We won't discard the raw data, but overall aggregating per country allowed us to get cleaner results with less outliers.
+
+There is also some further information about our variables and models we can summarize.
+
+### Summary of response and covariates mean,
+
+```{r}
+print("Summary for observation 1")
+mean(covid_new$perecentage_new_deaths)
+mean(covid_new$percentage_vaccinated)
+mean(covid_new$percentage_fully_vaccinated)
+print("Now observation 2, for aggregated data by country or location")
+mean(agg_new_deaths)
+mean(agg_vaccinated_populations)
+mean(agg_fully_vaccinated_population)
+```
+
+### Summary of response and covariates standard deviation,
+
+```{r}
+print("Summary for observation 1")
+sd(covid_new$perecentage_new_deaths)
+sd(covid_new$percentage_vaccinated)
+sd(covid_new$percentage_fully_vaccinated)
+print("Now observation 2, for aggregated data by country or location")
+sd(agg_new_deaths)
+sd(agg_vaccinated_populations)
+sd(agg_fully_vaccinated_population)
+```
+
+### Summary of response and covariates range,
+
+```{r}
+print("Summary for observation 1")
+range(covid_new$perecentage_new_deaths)
+range(covid_new$percentage_vaccinated)
+range(covid_new$percentage_fully_vaccinated)
+print("Now observation 2, for aggregated data by country or location")
+range(agg_new_deaths)
+range(agg_vaccinated_populations)
+range(agg_fully_vaccinated_population)
+```
+
+### Scatter plots against each covariate,
+
+```{r}
+plot(covid_new$percentage_vaccinated, covid_new$perecentage_new_deaths, main="Fig 10: New Death % and Vaccinated Population %", xlab="Vaccinated Population %", ylab="New Death %")
+plot(covid_new$percentage_fully_vaccinated, covid_new$perecentage_new_deaths, main="Fig 11: New Death % and Fully Vaccinated Population %", xlab="Fully Vaccinated Population %", ylab="New Death %")
+plot(agg_vaccinated_populations, agg_new_deaths, main="Fig 12: Aggregated New Death % and Aggregated Vaccinated Pop. %", xlab="Aggregated Vaccinated Population %", ylab="Aggregated New Death %")
+plot(agg_fully_vaccinated_population, agg_new_deaths, main="Fig 13: Agg. New Death % and Agg. Fully Vaccinated Pop. %", xlab="Aggregated Fully Vaccinated Population %", ylab="Aggregated New Death %")
+```
+
+### Summary of estimated regression coefficients
+
+```{r}
+print("Summary for observation 1")
+linmod <- lm(covid_new$perecentage_new_deaths ~ covid_new$percentage_vaccinated + covid_new$percentage_fully_vaccinated)
+print(linmod$coefficients)
+print("")
+print("Now observation 2, for aggregated data by country or location")
+linmod.2 <- lm(agg_new_deaths ~ agg_vaccinated_populations + agg_fully_vaccinated_population)
+print(linmod.2$coefficients)
+```
