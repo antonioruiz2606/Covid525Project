@@ -1,0 +1,364 @@
+---
+title: "Regression Analysis on COVID, Health, and Population Metrics"
+author: "Antonio R, Aditya M, Aadam L, Christopher L"
+fontsize: 12pt
+geometry: "margin=2.54cm,top=1cm"
+mainfont: Times New Roman
+header-includes:
+    - \usepackage{setspace}\singlespacing
+output: pdf_document
+---
+
+# Methods/Results: Need for polynomial terms assessed (LEFT this cause I forgot)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, out.width="50%"}
+covid <- read.csv(file = 'covid.csv')
+```
+
+```{r}
+
+covid_new = read.csv(file='covid_new.csv')
+
+agg_pop_death_percentage = aggregate(
+    x = covid_new$percentage_total_deaths, 
+    by = list(covid_new$location), 
+    FUN = mean
+  )
+
+agg_hdi = aggregate(
+    x = covid_new$human_development_index, 
+    by = list(covid_new$location), 
+    FUN = mean
+  )
+```
+
+## The Final Model for question 1
+
+### Final model estimated regression coefficients 
+Final model estimated regression coefficients are -1.729823, 4.326984, and -2.557500.
+### Final model standard errors
+Final model standard errors are plotted below, with an average error of 5.500678e-19, standard error of 1.808786, and p-value of 2.242029e-02 along with 1.723184e-01 R squared error.
+
+```{r}
+pop_death_per_country <- agg_pop_death_percentage$x
+hdi <- agg_hdi$x
+
+linmod <- lm(pop_death_per_country~poly(hdi, 2, raw=TRUE))
+b0 <- linmod$coef[1]
+b1 <- linmod$coef[2]
+b2 <- linmod$coef[3]
+
+print(c(b0, b1, b2))
+
+Yhat <- linmod$fitted.values
+e <- resid(linmod)
+
+standard.error <- summary(linmod)$coef[2,2]
+p.value <- summary(linmod)$coef[2,4]
+print(c(mean(e), standard.error, p.value, summary(linmod)$r.squared))
+
+plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+abline(h = 0, lty = 3)
+```
+
+### Final model test results
+```{r}
+Y.hat <- linmod$fitted.values # Obtain fitted values
+# Compute sums of squares
+Y.bar <- mean(pop_death_per_country)
+SSR <- sum((Y.hat - Y.bar)^2)
+SSE <- sum((pop_death_per_country - Y.hat)^2)
+
+n <- length(hdi)
+p <- 3
+
+# Compute mean squares
+MSR <- SSR/(p-1)
+MSE <- SSE/(n - p)
+
+f.stat <- MSR/MSE
+alpha <- 0.05
+fquantile <- qf(1 - alpha, p-1, n - p)
+print(c(f.stat, p-1, n-p, fquantile))
+```
+Clearly the Fstat is 3.539300 which is more than the 0.95 quantile, 3.275898 we conclude $H_{a}$: $\beta_{k} \ne 0$ for some k > 0 and k < p, i.e. there IS A linear association (regression relation). 
+It also implies that One or more of $\beta_{1}, \beta_{2}$ is non zero.
+
+### Detailed exploration of final model residuals
+
+```{r}
+Y1 <- linmod$fitted.values - b0
+e <- resid(linmod)
+par(mfrow = c(1, 3))
+plot(pop_death_per_country, Y1, xlab ="% Population of Death per Country" ,ylab=expression('Y_i - b_0'), pch = 16)
+abline(h = 0, lty = 3)
+plot(hdi, pop_death_per_country - b0 - b2*hdi^2)
+abline(a = 0, b = b1, col = "blue")
+plot(hdi^2, pop_death_per_country - b0 - b1*hdi)
+abline(a = 0, b = b2, col = "blue")
+```
+
+```{r}
+e <- resid(linmod)
+par(mfrow=c(1,3))
+plot(hdi, e, xlab="HDI")
+hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
+qqnorm(e, pch = 1, frame = FALSE)
+qqline(e, col = "steelblue", lwd = 2)
+```
+
+### Independence
+
+For this regression model, the HDIs are clearly independent from each other since we have a single data point for each country in the dataset. Therefore we are not violating the independence assumption of regression models.
+
+### Equal variance
+
+We are also assuming equal variance in our regression model. From the residuals against the fitted values plot, we can see that they make almost a uniform spread of residual at the later values of Y.hat. Clearly, there is a consistent vertical spread almost throughout the graph. There is a minor/ very small violation of equal variance due to this inconsistent spread in the beginning of Y.hat (One outlier).
+
+### Linearlity
+
+There are no specific regions in the graph with a majority of positive or negative residuals, therefore the model doesn't exclusively underpredict or overpredict in a region, indicating that the data tends to be linear. The same can be said from the $Y_i-b_0$ against % Population of Death per Country and $Y_i - b_0 - b_1 X$ and $Y_i - b_0 - b_2 X^2$ against $X^2 and X$
+
+### Normality
+
+The QQ-Plot allows us to visualize the normality of the errors from the data. There is a close to none violation of normality in the QQ-Plot since the data is relatively evenly spread out accross the line, with no strafing tails.
+
+### Need for interactions assessed
+None needed cause uni variable.
+
+
+## The Final Model for question 2
+
+### Final model estimated regression coefficients 
+Final model estimated regression coefficients are -6.785320e-04, 1.274800e-07, and -1.058172e-04.
+### Final model standard errors
+Final model standard errors are plotted below, with an average error of 3.778659e-19, standard error of 6.477939e-08, and p-value of 4.932836e-02 along with 1.762273e-02 R squared error.
+
+```{r}
+linmod2.modify <- lm(covid_new$perecentage_new_deaths ~ I(covid_new$percentage_vaccinated ^ 2) + I(covid_new$percentage_fully_vaccinated ^ 0.5))
+b0.modify <- linmod2.modify$coef[1]
+b1.modify <- linmod2.modify$coef[2]
+b2.modify <- linmod2.modify$coef[3]
+
+print(c(b0.modify, b1.modify, b2.modify))
+
+e.square <- linmod2.modify$residuals
+Y.hat.square <- linmod2.modify$fitted.values
+
+standard.error <- summary(linmod2.modify)$coef[2,2]
+p.value <- summary(linmod2.modify)$coef[2,4]
+print(c(mean(e.square), standard.error, p.value, summary(linmod2.modify)$r.squared))
+
+plot(Y.hat.square, e.square, pch = 16, xlab = "Fitted Values", ylab = "Residuals",
+main = "Modified Model", cex=0.5, cex.lab=0.5, cex.axis=0.5, cex.main=0.5)
+abline(h = 0, lty = 3)
+```
+
+### Final model test results
+```{r}
+Y.hat <- linmod2.modify$fitted.values # Obtain fitted values
+# Compute sums of squares
+Y.bar <- mean(covid_new$perecentage_new_deaths)
+SSR <- sum((Y.hat - Y.bar)^2)
+SSE <- sum((covid_new$perecentage_new_deaths - Y.hat)^2)
+
+n <- length(covid_new$perecentage_new_deaths)
+p <- 3
+
+# Compute mean squares
+MSR <- SSR/(p-1)
+MSE <- SSE/(n - p)
+
+f.stat <- MSR/MSE
+alpha <- 0.05
+fquantile <- qf(1 - alpha, p-1, n - p)
+print(c(f.stat, p-1, n-p, fquantile))
+```
+Clearly the Fstat is 9.902252 which is more than the 0.95 quantile, 3.003876 we conclude $H_{a}$: $\beta_{k} \ne 0$ for some k > 0 and k < p, i.e. there IS A linear association (regression relation). 
+It also implies that One or more of $\beta_{1}, \beta_{2}$ is non zero.
+
+### Detailed exploration of final model residuals
+
+```{r}
+Y <- covid_new$perecentage_new_deaths
+par(mfrow = c(1, 2))
+plot(covid_new$percentage_vaccinated^2, Y - b0.modify - b2.modify*(covid_new$percentage_fully_vaccinated^(1/2)), pch = 16, xlab = "Squared % of People Vaccinated",
+ylab = expression(Y-b[0]-b[2]*X[2]^(1/2)), main = "Modified Model",
+cex=0.5, cex.lab=0.5, cex.axis=0.5, cex.main=0.5)
+abline(a = 0, b = b1.modify, col = "blue")
+plot(covid_new$percentage_fully_vaccinated^(1/2), Y - b0.modify - b1.modify*covid_new$percentage_vaccinated^2, pch = 16, xlab = "Root % of People Fully Vaccinated",
+ylab = expression(Y-b[0]-b[1]*X[1]^2), main = "Modified Model",
+cex=0.5, cex.lab=0.5, cex.axis=0.5, cex.main=0.5)
+abline(a = 0, b = b2.modify, col = "blue")
+```
+
+```{r}
+e <- resid(linmod2.modify)
+par(mfrow=c(2,2))
+plot(covid_new$percentage_fully_vaccinated^(1/2), e, xlab="percentage_fully_vaccinated")
+plot(covid_new$percentage_vaccinated^2, e, xlab="percentage_vaccinated")
+hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
+qqnorm(e, pch = 1, frame = FALSE)
+qqline(e, col = "steelblue", lwd = 2)
+```
+
+### Independence
+
+For this regression model, the % of People fully Vaccinated and % of People Vaccinated is independent to % of new deaths. This is because the % of vaccinated is not grouped/ aggregated by country thus there are multiple points for a single country at different day's which are making the dependence to each other very plausible. Thus the relation between the residual error is can be dependent.
+Therefore we might be violating the independence assumption of regression models.
+
+### Equal variance
+
+We are also assuming equal variance in our regression model. From the residuals against the fitted values plot, we can see that they make a cone-shape, clearly, there isn't a consistent vertical spread throughout the graph. There is a huge violation of equal variance due to this inconsistent spread.
+
+### Linearlity
+
+There are specific regions in the graph with a majority of positive or negative residuals, therefore the model does under-predict or over-predict in a region, indicating that the data tends to be non-linear. The same can be said from the $Y_i-b_0$ against % Population of Death
+
+In the case of $Y_i - b_0 - b_1$ * % of People Vaccinated there is significant over predication when the % of People fully Vaccinated increases and in the case of  $Y_i - b_0 - b_2$ * % of People Fully Vaccinated there is significant under predication when the % of People fully Vaccinated increase
+
+### Normality
+
+The QQ-Plot allows us to visualize the normality of the errors from the data. There is a significant tail violation of normality in the QQ-Plot since the data is relatively evenly spread out across the line, when more points should be centered in the middle of the line. The tails also strafe from the line.
+
+### Need for interactions assessed
+Even on adding the interaction term, the p-value didn't suggest for keeping that variable.
+```{r}
+n <- length(covid_new$perecentage_new_deaths)
+linmod2_expanded <- lm(covid_new$perecentage_new_deaths ~ I(covid_new$percentage_vaccinated ^ 2) + I(covid_new$percentage_fully_vaccinated ^ 0.5) + (covid_new$percentage_vaccinated * covid_new$percentage_fully_vaccinated))
+Y.hat.full <- linmod2.modify$fitted.values
+Y.hat.expanded <- linmod2_expanded$fitted.values
+SSE.full <- sum((covid_new$perecentage_new_deaths - Y.hat.full)^2)
+SSE.expanded <- sum((covid_new$perecentage_new_deaths - Y.hat.expanded)^2)
+df.full <- n - 3
+df.expanded <- n - 4
+f.stat <- (SSE.full - SSE.expanded)/(df.full - df.expanded)/(SSE.expanded/df.expanded)
+alpha <- 0.05
+fquantile <- qf(1 - alpha, df.full - df.expanded, df.expanded)
+pvalue <- 1 - pf(f.stat, df.full - df.expanded, df.expanded)
+```
+Clearly the Fstat is 1.335048e+00 which is less than the 0.95 quantile, 3.849903e+00. we conclude $H_{0}$: $\beta_{4} = 0$ i.e. $X_{1} * X_{2}$ can be dropped from the regression model
+
+
+
+
+
+
+
+
+## The Final Model for question 3
+
+### Final model estimated regression coefficients 
+Final model estimated regression coefficients are 3.128825e-07, 5.763682e-08, and -1.128989e-07.
+### Final model standard errors
+Final model standard errors are plotted below, with an average error of -2.080667e-23, standard error of 3.673124e-08, and p-value of 1.258740e-01 along with 7.622458e-02 R squared error.
+
+```{r}
+agg_new_deaths <- aggregate(covid_new$perecentage_new_deaths, by=list(covid_new$location), mean)$x
+agg_fully_vaccinated_population <- aggregate(covid_new$percentage_fully_vaccinated, by=list(covid_new$location), mean)$x
+agg_vaccinated_populations <- aggregate(covid_new$percentage_vaccinated, by=list(covid_new$location), mean)$x
+
+linmod.2 <- lm(agg_new_deaths^2 ~ agg_vaccinated_populations + agg_fully_vaccinated_population)
+b0 <- linmod.2$coef[1]
+b1 <- linmod.2$coef[2]
+b2 <- linmod.2$coef[3]
+
+print(c(b0, b1, b2))
+
+Yhat <- linmod.2$fitted.values
+e <- resid(linmod.2)
+
+standard.error <- summary(linmod.2)$coef[2,2]
+p.value <- summary(linmod.2)$coef[2,4]
+print(c(mean(e), standard.error, p.value, summary(linmod.2)$r.squared))
+
+plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
+abline(h = 0, lty = 3)
+```
+
+### Final model test results
+```{r}
+Y.hat <- linmod.2$fitted.values # Obtain fitted values
+# Compute sums of squares
+Y.bar <- mean((agg_new_deaths)^2)
+SSR <- sum((Y.hat - Y.bar)^2)
+SSE <- sum(((agg_new_deaths)^2 - Y.hat)^2)
+
+n <- length(agg_new_deaths)
+p <- 3
+
+# Compute mean squares
+MSR <- SSR/(p-1)
+MSE <- SSE/(n - p)
+
+f.stat <- MSR/MSE
+alpha <- 0.1
+fquantile <- qf(1 - alpha, p-1, n - p)
+print(c(f.stat, p-1, n-p, fquantile))
+```
+Clearly the Fstat is 1.402741 which is close but less than the 0.95 quantile, 2.465809 we conclude $H_{o}$: $\beta_{k} = 0$ for some k > 0 and k < p, i.e. It implies that One or more of $\beta_{1}, \beta_{2}$ is zero.
+
+### Detailed exploration of final model residuals
+
+```{r}
+Y1 <- (agg_new_deaths)^2 - b0 - b1*agg_vaccinated_populations
+par(mfrow=c(1,2))
+e <- resid(linmod.2)
+plot((agg_new_deaths)^2,Y1, xlab = expression('Aggrigated % of People Fully Vaccinated Population'),ylab='Y_i^2 - b_0 - b1 * Aggrigated % of People Vaccinated Populations', pch = 16)
+abline(h = 0, lty = 3)
+Y2 <- (agg_new_deaths)^2 - b0 - b2*agg_fully_vaccinated_population
+plot((agg_new_deaths)^2, Y2, xlab = expression('Aggrigated % of People Vaccinated Populations'),ylab='Y_i^2 - b_0 - b2 * Aggrigated % of People Fully Vaccinated Population', pch = 16)
+abline(h = 0, lty = 3)
+```
+
+
+```{r}
+e <- resid(linmod.2)
+par(mfrow=c(2,2))
+plot(agg_fully_vaccinated_population, e, xlab="Aggrigated % of People Fully Vaccinated Population")
+plot(agg_vaccinated_populations, e, xlab="Aggrigated % of People Vaccinated Population")
+hist(e, main="Histogram of residuals", xlab="residual e", col="darkmagenta", freq=FALSE)
+qqnorm(e, pch = 1, frame = FALSE)
+qqline(e, col = "steelblue", lwd = 2)
+```
+
+### Independence
+
+For this regression model, the % of People fully Vaccinated and % of People Vaccinated might be dependent to % of new deaths. This is because the % of vaccinated is grouped/ aggregated by country thus there is a point for a single country. And via the graph, the % of People fully Vaccinated and % of People Vaccinated have no dependence to % of new deaths thus affecting the relation between the residual errors (Showing no dependence). Therefore we aren't violating the independence assumption of regression models.
+
+### Equal variance
+
+We are also assuming equal variance in our regression model. From the residuals against the fitted values plot, we can see that they make a thin uniform band with 3 outliers, clearly, there is a consistent vertical spread throughout the graph. There is no violation of equal variance due to this consistent spread.
+
+### Linearlity
+
+There are no specific regions in the graph with a majority of positive or negative residuals, therefore the model doesn't exclusively under-predict or over-predict in a region, indicating that the data tends to be linear. The same can be said from the $Y_i^2 - b_0 - b_1$ * % of People Vaccinated against % Population of Death and $Y_i^2 - b_0 - b_2$ * % of People Fully Vaccinated against % Population of Death
+
+### Normality
+
+The QQ-Plot allows us to visualize the normality of the errors from the data. There is a minor tail violation of normality in the QQ-Plot (cause of an outlier) since the data is relatively evenly spread out across the line (barring one or two). The tails don't strafe much from the line (Little on one end again not alot). And the distribution is not "compacted" on the ends. The quantiles from residuals distribution almost match quantiles from a normal distribution.
+Thus assumption of normality is not violated.
+
+
+### Need for interactions assessed
+Even on adding the interaction term, the p-value didn't suggest for keeping that variable.
+```{r}
+n <- length(agg_vaccinated_populations)
+linmod2_expanded <- lm(agg_new_deaths^2 ~ agg_vaccinated_populations + agg_fully_vaccinated_population + agg_vaccinated_populations * agg_fully_vaccinated_population)
+Y.hat.full <- linmod.2$fitted.values
+Y.hat.expanded <- linmod2_expanded$fitted.values
+SSE.full <- sum((agg_new_deaths^2 - Y.hat.full)^2)
+SSE.expanded <- sum((agg_new_deaths^2 - Y.hat.expanded)^2)
+df.full <- n - 3
+df.expanded <- n - 4
+f.stat <- (SSE.full - SSE.expanded)/(df.full - df.expanded)/(SSE.expanded/df.expanded)
+alpha <- 0.05
+fquantile <- qf(1 - alpha, df.full - df.expanded, df.expanded)
+pvalue <- 1 - pf(f.stat, df.full - df.expanded, df.expanded)
+print(c(f.stat, df.full - df.expanded, df.expanded, fquantile, pvalue))
+```
+Clearly the Fstat is 1.2643724 which is less than the 0.95 quantile, 4.1392525. we conclude $H_{0}$: $\beta_{4} = 0$ i.e. agg_vaccinated_populations * agg_fully_vaccinated_population can be dropped from the regression model
