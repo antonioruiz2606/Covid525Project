@@ -1,0 +1,146 @@
+---
+title: "Untitled"
+output: pdf_document
+date: "2022-12-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+In an attempt to analyze the points of interest outlined in the introduction, we created a few models relating different variables to total number of deaths per region and number of new deaths per region. 
+We use a total of three different linear models to analyze the relationship of the variables of interest to total and marginal number of deaths. 
+For each of the linear models we are assuming four things hold true for the errors from the model: Linearity of Errors, Independence of Errors, Normality of Errors, and Equality of Variance of Errors, or LINE for short. 
+When we say "error", we mean the difference between the observed value of an observation and the predicted value of an observation given by the model. 
+I will now explain these assumptions in more detail. 
+Linearity: we require the errors from the model to be roughly linear in shape when graphed about zero. 
+They do not have to precisely form a line, but they should all be contained within a tight band about zero when plotted. 
+Independence: the errors should each be independent of other errors, meaning that having any knowledge about one observation's error should not give you any information about another observation's error. 
+Normality: we require that the errors in our model be normally distributed with an average value of 0. 
+Equal Variance: we require that the variance of the errors be consistent and evenly spread throughout the model.
+
+The first variable which we decided to look into was the Human Development Index. 
+As stated before, the Human Development Index is a composite statistic measure of the life expectancy, human education, and per capita income of a country, which is used to place countries into different tiers of "development". 
+For reference, higher life expectancies, higher levels of education, and higher per capita incomes correlate to higher Human Development Indices. 
+We figured that this would be a good variable for determining and predicting the number of deaths in a region for countries with higher life expectancies tend to have better access to medicine and health care for treating diseases, countries with higher education are more likely to raise awareness for "cleaner" practices to avoid the spread of diseases, and countries with higher per capita income are more likely to availability to better health practices.
+
+Our initial model for these two variables plots Total Deaths (as a percentage with respect to total population) against our predictor variable, Human Development Index, aggregated by country. 
+The aggregation is just to remove duplicate observations for the same country. 
+We expect that having a higher HDI would imply that the total number of deaths is lower for a given country. 
+This plot will help us get an initial idea of the relationship between HDI and Total Deaths.
+
+```{r}
+covid_new = read.csv(file='covid_new.csv')
+agg_pop_death_percentage = aggregate(
+    x = covid_new$percentage_total_deaths, 
+    by = list(covid_new$location), 
+    FUN = mean
+  )
+agg_hdi = aggregate(
+    x = covid_new$human_development_index, 
+    by = list(covid_new$location), 
+    FUN = mean
+  )
+```
+
+```{r}
+pop_death_per_country <- agg_pop_death_percentage$x
+hdi <- agg_hdi$x
+linmod <- lm(pop_death_per_country~hdi)
+b0 <- linmod$coef[1]
+b1 <- linmod$coef[2]
+df.y <- data.frame(
+  "Mean percentage of dead population" = mean(pop_death_per_country),
+  "Standard Deviation of percentage of dead population" = sd(pop_death_per_country),
+  "Minimum percentage of dead population" = min(pop_death_per_country),
+  "Maximum percentage of dead population" = max(pop_death_per_country)
+)
+#show(df.y)
+df.x <- data.frame(
+  "b0" = b0,
+  "b1" = b1,
+  "Mean HDI" = mean(hdi),
+  "Standard Deviation of HDI" = sd(hdi),
+  "Minimum HDI" = min(hdi),
+  "Maximum HDI" = max(hdi)
+)
+#show(df.x)
+```
+
+```{r}
+plot(hdi, pop_death_per_country, main="Total Population Death % and HDI", xlab="HDI", ylab="Total Population Death %")
+abline(b0, b1, col="blue")
+```
+
+We can see from the plot there appears to be a slight correlation between HDI and Total Deaths, except the correlation is in the opposite direction from what we predicted. 
+This may just a be an unfortunate consequence of the aggregation, but in either case it would be best to perform a test to determine the likelihood that the relationship shown in the graph is not an instance of chance. For this, we can perform a hypothesis test. 
+If there does not exist a relationship between HDI and Total Deaths, then we would expect the slope of the line to be equal to 0, whereas if there is a relationship between the two variables, then we would expect the slope to be anything but 0. 
+Therefore we pose the following hypothesis test on the slope of the model: $H_0: \beta_1 = 0$ and $H_a: \beta1 \neq 0$.
+
+
+```{r}
+standard.error <- summary(linmod)$coef[2,2]
+p.value <- summary(linmod)$coef[2,4]
+df.p.and.error <- data.frame(
+  "Standard Error" = standard.error,
+  "P Value" = p.value
+)
+show(p.value)
+```
+
+With the p-value being 0.230, we can say that the smallest $\alpha$ for which we can conclude the alternative hypothesis is 0.230. 
+This simply means that we can say with a confidence of 77% that the percent of the total population that died from COVID has a linear relationship with the Human Development index, despite it not being linear in the direction we hoped. 
+We made an attempt to adjust this linear model to help it better fit the our error assumptions for a linear model. Instead of plotting total deaths against HDI, we found that we get a significantly better model if we plot total deaths against $\text{HDI}^2+\text{ HDI}$. 
+When we perform this transformation on the model, it helps stretch out the data on the x-axis by a factor of their magnitude.
+Therefore when the values on the x-axis are large, they get spread out more.
+We decided that such a transformation might be better because the data points in the right side of the graph are more farther spread from the model than the points on the left hand side of the graph.
+This means that in the transformed data, the model can better account for the trend of the data.
+
+The second variable we chose to look at was percentage of population vaccinated/fully vaccinated, the difference being whether or not a person has had a complete vaccination vs only had a partial vaccination. 
+The logic behind this decision is pretty self explanatory: if a population has a high vaccination rate, then they are more likely to have a lower death rate.
+
+```{r}
+agg_new_deaths <- aggregate(covid_new$perecentage_new_deaths, by=list(covid_new$location), mean)$x
+agg_fully_vaccinated_population <- aggregate(covid_new$percentage_fully_vaccinated, by=list(covid_new$location), mean)$x
+agg_vaccinated_populations <- aggregate(covid_new$percentage_vaccinated, by=list(covid_new$location), mean)$x
+```
+
+Our initial models for these plots came out very ugly. 
+We will provide a copy of the plots below.
+
+```{r}
+plot(covid_new$percentage_vaccinated, covid_new$perecentage_new_deaths)
+plot(covid_new$percentage_fully_vaccinated, covid_new$perecentage_new_deaths)
+```
+
+As you can see in these plots, there are an extremely high number of data points concentrated in the range 0 to 10 on the x-axis. 
+This is due to the fact that we are not aggregating the data, so every single entry in our entire data set is included in this plot, including many early observations when the number of new covid deaths was very low. 
+Aside from this though, we do see a slightly negative linear trend of data points extending out from the mass on the left. 
+We can interpret this as a good thing, for this likely means that for all the observations in which the number of new deaths was significant, having a higher vaccinated population helps decrease the number of new deaths in the population. 
+Overall though, we cannot perform much useful analysis on the models since the concentrated data on the left would dilute the accuracy of the results. 
+One attempt we made to fix this was to combine the two models while transforming the predictor variables. 
+Instead of plotting new deaths against percentage of vaccinated/fully vaccinated population individually, we plotted against percentage of population vaccinated squared combined with the square root of percentage of population fully vaccinated. 
+When looking at the two models we see that the plot of new deaths against percentage vaccinated has a sharper cone of data from left to right than that of the plot against fully vaccinated population. 
+By taking the square of the vaccinated data we can stretch out these data points thus giving us a plot where the cone of data from left to right is less steep.
+Similarly when we take the square root of the fully vaccinated population, this makes the less steep cone of data points stretching from left to right more steep. 
+Now that we have performed data transformations on each of our two predictor variables, if we know splice their effects together into one model, the resulting model will take into account both of the transformations which make the two individual graphs look more similar into a combined graph which can have a better model overall.
+
+The last variable which we chose to look at is actually just a revision of the second. 
+Since the plots in our second model are heavily concentrated on the left, we thought that if we were to aggregate the data by country, then we could help eliminate the congestion of data points which made it difficult to perform analysis. 
+The models for these plots unfortunately aren't a whole lot better, but they do allow us to perform some useful analysis. 
+Here are the plots containing the models for percentage vaccinated/fully vaccinated.
+
+```{r}
+plot(agg_vaccinated_populations, agg_new_deaths)
+plot(agg_fully_vaccinated_population, agg_new_deaths)
+```
+
+We can see from the plots that the congestion on the left has significantly decreased and that among the few data points not on the left side of the plots, they correlate to low numbers of new deaths, indicating that among the countries which have higher percentages of vaccinated populations, their respective aggregated new death rate is low. 
+Although the sample size is low for this conjecture, it is still a promising result. 
+To adjust this model, we followed our decision made in the previous model combined the two plots together, but instead of transforming our predictor variables, we instead transformed our response variable. 
+The transformed data now plots aggregated new deaths squared against percentage of population vaccinated and percentage of population fully vaccinated. 
+Recall how the reasoning behind modifying the input data in the previous models was to stretch out the data on the x-axis. 
+Well we can see clearly in these plots that it would be much better to modify the data along the y-axis instead since most of the data points are found along the left side of the graph. 
+By squaring the number of aggregated new deaths, we stretch out these values in our previous plots along the y-axis.
+In doing so, what appears is a slight but strong negative correlation between aggregated new deaths and aggregated (fully) vaccinated population.
+This is of course the result which we had hoped would find to hold true in the data.

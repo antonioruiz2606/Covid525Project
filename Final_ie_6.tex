@@ -1,0 +1,1656 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmainfont[]{Times New Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=2.54cm,top=1cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{setspace}\singlespacing
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Regression Analysis on COVID, Health, and Population Metrics},
+  pdfauthor={Antonio R, Aditya M, Aadam L, Christopher L},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Regression Analysis on COVID, Health, and Population Metrics}
+\author{Antonio R, Aditya M, Aadam L, Christopher L}
+\date{}
+
+\begin{document}
+\maketitle
+
+For this analysis we are investigating a COVID-19 data set that was
+provided to us from class. We are essentially using linear regression
+models to find patterns that give us an insight into some relationships
+of the variables in the data set. These linear regression models will,
+on a high level, fit lines and curves of best fit to the data. After we
+gather the results from these models we interpret their importance, as
+well as their validity. Linear models come with some assumptions, so to
+test their validity we need to show that it is not incorrect to make
+these assumptions given this data set.
+
+We can answer multiple questions through a regression analysis of the
+COVID-19 data. - One of the questions we want to analyze is how the
+percentage of the population that died from COVID-19 in a country
+interacts with that country's human development index (HDI). - We also
+want to find what is the relationship between new deaths and percentage
+of vaccinated population, and compare it to new deaths with respect to
+the percentage of fully vaccinated population.
+
+The dataset we are using includes data on confirmed COVID cases, deaths,
+hospitalizations, testing, vaccinations, and other metrics across
+several countries since January 4, 2021. Our goal is to answer the
+previous questions by leveraging this data set.
+
+An individual observation in the data (a row) corresponds to the number
+of new covid cases, total number of covid cases, total number of death,
+and other covid, health, and population related metrics for a country in
+a single day since January 4, 2021. Our dataset has 1107 observations.
+
+Our responses (dependent variables) are the variables we want to find
+more about, in our case, these will be the percentage of population that
+died from COVID-19 in a country, and new COVID-19 deaths.
+
+Our covariates (independent variables) are the variables we will analyze
+with our responses to get further insight into the relationships we want
+to analyze: To analyze the percentage of population that died from
+COVID-19 in a country we will use HDI as a covariate. To analyze the
+number of new deaths, we will use the percentage of vaccinated
+population and the percentage of fully vaccinated population as
+covariates.
+
+Some of our covariates are not in the original dataset, we will
+manipulate the dataset by aggregating, multiplying, and dividing data to
+get our responses and covariates:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{covid }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\AttributeTok{file=}\StringTok{\textquotesingle{}covid.csv\textquotesingle{}}\NormalTok{)}
+\NormalTok{location }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{location}
+
+\NormalTok{date }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{date}
+
+\NormalTok{approx\_percentage\_new\_positive\_tests }\OtherTok{\textless{}{-}}\NormalTok{ ((covid}\SpecialCharTok{$}\NormalTok{new\_tests}\SpecialCharTok{*}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{positive\_rate)}\SpecialCharTok{/}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{population)}\SpecialCharTok{*}\DecValTok{100}
+
+\NormalTok{approx\_percentage\_total\_positve\_tests }\OtherTok{\textless{}{-}}\NormalTok{ ((covid}\SpecialCharTok{$}\NormalTok{total\_tests}\SpecialCharTok{*}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{positive\_rate)}\SpecialCharTok{/}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{population)}\SpecialCharTok{*}\DecValTok{100}
+
+\NormalTok{tests\_per\_case }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{tests\_per\_case}
+
+\NormalTok{percentage\_vaccinated }\OtherTok{\textless{}{-}}\NormalTok{ (covid}\SpecialCharTok{$}\NormalTok{people\_vaccinated}\SpecialCharTok{/}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{population)}\SpecialCharTok{*}\DecValTok{100}
+
+\NormalTok{percentage\_fully\_vaccinated }\OtherTok{\textless{}{-}}\NormalTok{ (covid}\SpecialCharTok{$}\NormalTok{people\_fully\_vaccinated}\SpecialCharTok{/}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{population)}\SpecialCharTok{*}\DecValTok{100}
+
+\NormalTok{percentage\_new\_vaccinated }\OtherTok{\textless{}{-}}\NormalTok{ (covid}\SpecialCharTok{$}\NormalTok{new\_vaccinations}\SpecialCharTok{/}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{population)}\SpecialCharTok{*}\DecValTok{100}
+
+\NormalTok{population\_density }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{population\_density}
+
+\NormalTok{percentage\_population\_over\_65 }\OtherTok{\textless{}{-}}\NormalTok{ (covid}\SpecialCharTok{$}\NormalTok{aged\_65\_older}\SpecialCharTok{/}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{population)}\SpecialCharTok{*}\DecValTok{100}
+
+\NormalTok{gdp\_per\_capita }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{gdp\_per\_capita}
+
+\NormalTok{percentage\_cardiovascular\_death }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{cardiovasc\_death\_rate}\SpecialCharTok{/}\DecValTok{1000}
+
+\NormalTok{diabetes\_prevalence }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{diabetes\_prevalence}
+
+\NormalTok{hospital\_beds\_per\_100 }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{hospital\_beds\_per\_thousand}\SpecialCharTok{/}\DecValTok{10}
+
+\NormalTok{life\_expectancy }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{life\_expectancy}
+
+\NormalTok{human\_development\_index }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{human\_development\_index}
+
+\NormalTok{stringency\_index }\OtherTok{\textless{}{-}}\NormalTok{ covid}\SpecialCharTok{$}\NormalTok{stringency\_index}
+
+\NormalTok{percentage\_total\_deaths }\OtherTok{\textless{}{-}}\NormalTok{ (covid}\SpecialCharTok{$}\NormalTok{total\_deaths}\SpecialCharTok{/}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{population)}\SpecialCharTok{*}\DecValTok{100}
+
+\NormalTok{perecentage\_new\_deaths }\OtherTok{\textless{}{-}}\NormalTok{ (covid}\SpecialCharTok{$}\NormalTok{new\_deaths}\SpecialCharTok{/}\NormalTok{covid}\SpecialCharTok{$}\NormalTok{population)}\SpecialCharTok{*}\DecValTok{100}
+
+\NormalTok{temp }\OtherTok{\textless{}{-}} \FunctionTok{cbind.data.frame}\NormalTok{(covid}\SpecialCharTok{$}\NormalTok{location, covid}\SpecialCharTok{$}\NormalTok{population)}
+
+\NormalTok{agg }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid}\SpecialCharTok{$}\NormalTok{new\_deaths, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid}\SpecialCharTok{$}\NormalTok{location), mean)}
+
+\ControlFlowTok{for}\NormalTok{(con }\ControlFlowTok{in} \FunctionTok{unique}\NormalTok{(covid}\SpecialCharTok{$}\NormalTok{location)) \{}
+\NormalTok{  temp[,}\DecValTok{2}\NormalTok{][temp[,}\DecValTok{1}\NormalTok{] }\SpecialCharTok{==}\NormalTok{ con] }\OtherTok{=}\NormalTok{ (agg[,}\DecValTok{2}\NormalTok{][agg[,}\DecValTok{1}\NormalTok{] }\SpecialCharTok{==}\NormalTok{ con]}\SpecialCharTok{/}\NormalTok{temp[,}\DecValTok{2}\NormalTok{][temp[,}\DecValTok{1}\NormalTok{] }\SpecialCharTok{==}\NormalTok{ con][}\DecValTok{1}\NormalTok{])}\SpecialCharTok{*}\DecValTok{100}
+\NormalTok{\}}
+
+\NormalTok{percentage\_avg\_new\_deaths\_by\_country }\OtherTok{=}\NormalTok{ temp[,}\DecValTok{2}\NormalTok{]}
+
+\CommentTok{\# Here we are creating the new csv and dataframe covid\_new using the previous variables.}
+\NormalTok{covid\_new }\OtherTok{=} \FunctionTok{cbind.data.frame}\NormalTok{(date, location, approx\_percentage\_new\_positive\_tests, approx\_percentage\_total\_positve\_tests, tests\_per\_case, percentage\_vaccinated, percentage\_fully\_vaccinated, percentage\_new\_vaccinated, population\_density, percentage\_population\_over\_65, gdp\_per\_capita, percentage\_cardiovascular\_death, diabetes\_prevalence, hospital\_beds\_per\_100, life\_expectancy, human\_development\_index, stringency\_index, percentage\_avg\_new\_deaths\_by\_country, percentage\_total\_deaths, perecentage\_new\_deaths)}
+\FunctionTok{write.csv}\NormalTok{(covid\_new, }\StringTok{"./covid\_new.csv"}\NormalTok{,}\AttributeTok{row.names=} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{model-1-percentage-of-population-that-died-from-covid-with-respect-to-the-human-development-index}{%
+\subsection{Model 1: Percentage of Population that Died from COVID With
+Respect to the Human Development
+Index}\label{model-1-percentage-of-population-that-died-from-covid-with-respect-to-the-human-development-index}}
+
+Response: Percentage of Average Population that died from COVID in a
+country, Covariate: Country's HDI
+
+Here we aggregate the data, remember, the data set includes data for
+each day after the mentioned date, so we need to aggregate these over
+each country.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{covid\_new }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\AttributeTok{file=}\StringTok{\textquotesingle{}covid\_new.csv\textquotesingle{}}\NormalTok{)}
+\NormalTok{agg\_pop\_death\_percentage }\OtherTok{=} \FunctionTok{aggregate}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_total\_deaths, }
+    \AttributeTok{by =} \FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), }
+    \AttributeTok{FUN =}\NormalTok{ mean}
+\NormalTok{  )}
+\NormalTok{agg\_hdi }\OtherTok{=} \FunctionTok{aggregate}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ covid\_new}\SpecialCharTok{$}\NormalTok{human\_development\_index, }
+    \AttributeTok{by =} \FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), }
+    \AttributeTok{FUN =}\NormalTok{ mean}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Here we create the model, and fit our regression line (line of best
+fit).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pop\_death\_per\_country }\OtherTok{\textless{}{-}}\NormalTok{ agg\_pop\_death\_percentage}\SpecialCharTok{$}\NormalTok{x}
+\NormalTok{hdi }\OtherTok{\textless{}{-}}\NormalTok{ agg\_hdi}\SpecialCharTok{$}\NormalTok{x}
+\NormalTok{linmod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pop\_death\_per\_country}\SpecialCharTok{\textasciitilde{}}\NormalTok{hdi)}
+\NormalTok{b0 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{1}\NormalTok{]}
+\NormalTok{b1 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{]}
+\NormalTok{df.y }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \StringTok{"Mean percentage of dead population"} \OtherTok{=} \FunctionTok{mean}\NormalTok{(pop\_death\_per\_country),}
+  \StringTok{"Standard Deviation of percentage of dead population"} \OtherTok{=} \FunctionTok{sd}\NormalTok{(pop\_death\_per\_country),}
+  \StringTok{"Minimum percentage of dead population"} \OtherTok{=} \FunctionTok{min}\NormalTok{(pop\_death\_per\_country),}
+  \StringTok{"Maximum percentage of dead population"} \OtherTok{=} \FunctionTok{max}\NormalTok{(pop\_death\_per\_country)}
+\NormalTok{)}
+\FunctionTok{show}\NormalTok{(df.y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Mean.percentage.of.dead.population
+## 1                         0.08397941
+##   Standard.Deviation.of.percentage.of.dead.population
+## 1                                          0.05077081
+##   Minimum.percentage.of.dead.population Maximum.percentage.of.dead.population
+## 1                           0.008498168                             0.1851294
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df.x }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \StringTok{"b0"} \OtherTok{=}\NormalTok{ b0,}
+  \StringTok{"b1"} \OtherTok{=}\NormalTok{ b1,}
+  \StringTok{"Mean HDI"} \OtherTok{=} \FunctionTok{mean}\NormalTok{(hdi),}
+  \StringTok{"Standard Deviation of HDI"} \OtherTok{=} \FunctionTok{sd}\NormalTok{(hdi),}
+  \StringTok{"Minimum HDI"} \OtherTok{=} \FunctionTok{min}\NormalTok{(hdi),}
+  \StringTok{"Maximum HDI"} \OtherTok{=} \FunctionTok{max}\NormalTok{(hdi)}
+\NormalTok{)}
+\FunctionTok{show}\NormalTok{(df.x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      b0       b1  Mean.HDI Standard.Deviation.of.HDI
+## (Intercept) -0.02997058 0.131377 0.8673514                0.07818149
+##             Minimum.HDI Maximum.HDI
+## (Intercept)       0.645       0.957
+\end{verbatim}
+
+Here we graph our response with our covariate and the line of best fit
+from the model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(hdi, pop\_death\_per\_country, }\AttributeTok{main=}\StringTok{"Figure 1: Line of best fit from Model 1"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"HDI"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Total Population Death \%"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(b0, b1, }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+Here is some more data on our model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{standard.error }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{p.value }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\NormalTok{df.p.and.error }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \StringTok{"Standard Error"} \OtherTok{=}\NormalTok{ standard.error,}
+  \StringTok{"P Value"} \OtherTok{=}\NormalTok{ p.value}
+\NormalTok{)}
+\FunctionTok{show}\NormalTok{(df.p.and.error)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Standard.Error   P.Value
+## 1      0.1074983 0.2298255
+\end{verbatim}
+
+We will also make a boxplot of the reponse and covariate to identify
+outliers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{boxplot}\NormalTok{(hdi, }\AttributeTok{main=}\StringTok{"Figure 2: HDI"}\NormalTok{, }\AttributeTok{horizontal=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{boxplot}\NormalTok{(pop\_death\_per\_country, }\AttributeTok{main=}\StringTok{"Fig 3: Total Population Death \%"}\NormalTok{, }\AttributeTok{horizontal=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+From these boxplots we can identify no outliers for the country total
+population death percentage, and only 4 outliers for the HDI, we still
+need to consider these in our analyisis since they give us valuable
+information.
+
+\hypertarget{models-2-and-3-new-deaths-with-respect-to-the-percentage-of-vaccinated-and-fully-vaccinated-population}{%
+\subsection{Models 2 and 3: New Deaths with Respect to the Percentage of
+Vaccinated and Fully Vaccinated
+Population}\label{models-2-and-3-new-deaths-with-respect-to-the-percentage-of-vaccinated-and-fully-vaccinated-population}}
+
+Response: Average New Deaths Percentage, Covariate: Percentage of
+population that is vaccinated. Response: Average New Deaths Percentage,
+Covariate: Percentage of population that is fully vaccinated.
+
+Similar to Model 1, we can aggregate the data by country, but in this
+case we can analyze both the aggregated and non-aggregated ``raw''
+variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{agg\_new\_deaths }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+\NormalTok{agg\_fully\_vaccinated\_population }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+\NormalTok{agg\_vaccinated\_populations }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{observation-1}{%
+\subsubsection{Observation 1}\label{observation-1}}
+
+Correlation between the percentage new deaths which is the number of new
+deaths as a percentage of the total population and percentage of
+population vaccinated (one case is fully vaccinated and another in
+vaccinated with at least one dose).
+
+\hypertarget{observation-2}{%
+\subsubsection{Observation 2}\label{observation-2}}
+
+Correlation between the percentage new deaths which is the number of new
+deaths as a percentage of the total population and percentage of
+population vaccinated (one case is fully vaccinated and another in
+vaccinated with at least one dose) All aggregated by country/ location.
+
+We can graph the boxplot of all of the variables we will use for these
+models to identify outliers.
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-8-2.pdf}
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-8-3.pdf}
+
+We can see why aggregating the data is good approach. We won't discard
+the raw data, but overall aggregating per country allowed us to get
+cleaner results with less outliers.
+
+There is also some further information about our variables and models we
+can summarize.
+
+\hypertarget{summary-of-response-and-covariates-mean}{%
+\subsubsection{Summary of response and covariates
+mean,}\label{summary-of-response-and-covariates-mean}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Summary for observation 1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Summary for observation 1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"Mean of New Death Percentage : "}\NormalTok{, }\FunctionTok{mean}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mean of New Death Percentage : 0.000574512770199863"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"Mean of Percentage of Vaccinated : "}\NormalTok{, }\FunctionTok{mean}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mean of Percentage of Vaccinated : 5.98819648381781"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"Mean of Percentage of Fully Vaccinated : "}\NormalTok{, }\FunctionTok{mean}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mean of Percentage of Fully Vaccinated : 2.33318530763579"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Now observation 2, for aggregated data by country or location"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Now observation 2, for aggregated data by country or location"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"Mean of New Death Percentage(Aggrigated):"}\NormalTok{,}\FunctionTok{mean}\NormalTok{(agg\_new\_deaths))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mean of New Death Percentage(Aggrigated):0.000479282033399978"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"Mean of Percentage of Vaccinated(Aggrigated):"}\NormalTok{,}\FunctionTok{mean}\NormalTok{(agg\_vaccinated\_populations))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mean of Percentage of Vaccinated(Aggrigated):5.17469428202813"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"Mean of Percentage of Fully Vaccinated(Aggrigated)"}\NormalTok{,}\FunctionTok{mean}\NormalTok{(agg\_fully\_vaccinated\_population))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mean of Percentage of Fully Vaccinated(Aggrigated)1.9906907822009"
+\end{verbatim}
+
+\hypertarget{summary-of-response-and-covariates-standard-deviation}{%
+\subsubsection{Summary of response and covariates standard
+deviation,}\label{summary-of-response-and-covariates-standard-deviation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Summary for observation 1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Summary for observation 1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0005252965
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9.301557
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.817093
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Now observation 2, for aggregated data by country or location"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Now observation 2, for aggregated data by country or location"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(agg\_new\_deaths)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0004012848
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(agg\_vaccinated\_populations)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.981281
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(agg\_fully\_vaccinated\_population)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.802026
+\end{verbatim}
+
+\hypertarget{summary-of-response-and-covariates-range}{%
+\subsubsection{Summary of response and covariates
+range,}\label{summary-of-response-and-covariates-range}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Summary for observation 1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Summary for observation 1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.000000000 0.003516713
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  0.01100007 56.95181849
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.918823e-05 4.294238e+01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Now observation 2, for aggregated data by country or location"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Now observation 2, for aggregated data by country or location"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(agg\_new\_deaths)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.000000000 0.001616939
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(agg\_vaccinated\_populations)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  0.06468428 38.38096537
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(agg\_fully\_vaccinated\_population)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  0.0212315 21.1243446
+\end{verbatim}
+
+\hypertarget{scatter-plots-against-each-covariate}{%
+\subsubsection{Scatter plots against each
+covariate,}\label{scatter-plots-against-each-covariate}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated, covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths, }\AttributeTok{main=}\StringTok{"Fig 10: New Death \% and Vaccinated Population \%"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"Vaccinated Population \%"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"New Death \%"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated, covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths, }\AttributeTok{main=}\StringTok{"Fig 11: New Death \% and Fully Vaccinated Population \%"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"Fully Vaccinated Population \%"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"New Death \%"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-12-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(agg\_vaccinated\_populations, agg\_new\_deaths, }\AttributeTok{main=}\StringTok{"Fig 12: Aggregated New Death \% and Aggregated Vaccinated Pop. \%"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"Aggregated Vaccinated Population \%"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Aggregated New Death \%"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-12-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(agg\_fully\_vaccinated\_population, agg\_new\_deaths, }\AttributeTok{main=}\StringTok{"Fig 13: Agg. New Death \% and Agg. Fully Vaccinated Pop. \%"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"Aggregated Fully Vaccinated Population \%"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Aggregated New Death \%"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-12-4.pdf}
+
+\hypertarget{summary-of-estimated-regression-coefficients}{%
+\subsubsection{Summary of estimated regression
+coefficients}\label{summary-of-estimated-regression-coefficients}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Summary for observation 1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Summary for observation 1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linmod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths }\SpecialCharTok{\textasciitilde{}}\NormalTok{ covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated }\SpecialCharTok{+}\NormalTok{ covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated)}
+\FunctionTok{print}\NormalTok{(linmod}\SpecialCharTok{$}\NormalTok{coefficients)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                           (Intercept)       covid_new$percentage_vaccinated 
+##                          5.661810e-04                          1.112396e-05 
+## covid_new$percentage_fully_vaccinated 
+##                         -2.497904e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Now observation 2, for aggregated data by country or location"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Now observation 2, for aggregated data by country or location"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linmod}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(agg\_new\_deaths }\SpecialCharTok{\textasciitilde{}}\NormalTok{ agg\_vaccinated\_populations }\SpecialCharTok{+}\NormalTok{ agg\_fully\_vaccinated\_population)}
+\FunctionTok{print}\NormalTok{(linmod}\FloatTok{.2}\SpecialCharTok{$}\NormalTok{coefficients)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                     (Intercept)      agg_vaccinated_populations 
+##                    4.448064e-04                    2.970524e-05 
+## agg_fully_vaccinated_population 
+##                   -5.989874e-05
+\end{verbatim}
+
+In an attempt to analyze the points of interest outlined in the
+introduction, we created a few models relating different variables to
+total number of deaths per region and number of new deaths per region.
+We use a total of three different linear models to analyze the
+relationship of the variables of interest to total and marginal number
+of deaths. For each of the linear models we are assuming four things
+hold true for the errors from the model: Linearity of Errors,
+Independence of Errors, Normality of Errors, and Equality of Variance of
+Errors, or LINE for short. When we say ``error'', we mean the difference
+between the observed value of an observation and the predicted value of
+an observation given by the model. I will now explain these assumptions
+in more detail. \textbf{Linearity:} we require the errors from the model
+to be roughly linear in shape when graphed about zero. They do not have
+to precisely form a line, but they should all be contained within a
+tight band about zero when plotted. \textbf{Independence:} the errors
+should each be independent of other errors, meaning that having any
+knowledge about one observation's error should not give you any
+information about another observation's error. \textbf{Normality:} we
+require that the errors in our model be normally distributed with an
+average value of 0. \textbf{Equal Variance:} we require that the
+variance of the errors be consistent and evenly spread throughout the
+model.
+
+The first variable which we decided to look into was the Human
+Development Index. As stated before, the Human Development Index is a
+composite statistic measure of the life expectancy, human education, and
+per capita income of a country, which is used to place countries into
+different tiers of ``development''. For reference, higher life
+expectancies, higher levels of education, and higher per capita incomes
+correlate to higher Human Development Indices. We figured that this
+would be a good variable for determining and predicting the number of
+deaths in a region for countries with higher life expectancies tend to
+have better access to medicine and health care for treating diseases,
+countries with higher education are more likely to raise awareness for
+``cleaner'' practices to avoid the spread of diseases, and countries
+with higher per capita income are more likely to availability to better
+health practices.
+
+Our initial model for these two variables plots Total Deaths (as a
+percentage with respect to total population) against our predictor
+variable, Human Development Index, aggregated by country. The
+aggregation is just to remove duplicate observations for the same
+country. We expect that having a higher HDI would imply that the total
+number of deaths is lower for a given country. This plot will help us
+get an initial idea of the relationship between HDI and Total Deaths.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{covid\_new }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\AttributeTok{file=}\StringTok{\textquotesingle{}covid\_new.csv\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{agg\_pop\_death\_percentage }\OtherTok{=} \FunctionTok{aggregate}\NormalTok{(}
+
+    \AttributeTok{x =}\NormalTok{ covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_total\_deaths, }
+
+    \AttributeTok{by =} \FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), }
+
+    \AttributeTok{FUN =}\NormalTok{ mean}
+
+\NormalTok{  )}
+
+\NormalTok{agg\_hdi }\OtherTok{=} \FunctionTok{aggregate}\NormalTok{(}
+
+    \AttributeTok{x =}\NormalTok{ covid\_new}\SpecialCharTok{$}\NormalTok{human\_development\_index, }
+
+    \AttributeTok{by =} \FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), }
+
+    \AttributeTok{FUN =}\NormalTok{ mean}
+
+\NormalTok{  )}
+\NormalTok{pop\_death\_per\_country }\OtherTok{\textless{}{-}}\NormalTok{ agg\_pop\_death\_percentage}\SpecialCharTok{$}\NormalTok{x}
+
+\NormalTok{hdi }\OtherTok{\textless{}{-}}\NormalTok{ agg\_hdi}\SpecialCharTok{$}\NormalTok{x}
+
+\NormalTok{linmod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pop\_death\_per\_country}\SpecialCharTok{\textasciitilde{}}\NormalTok{hdi)}
+
+\NormalTok{b0 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{1}\NormalTok{]}
+
+\NormalTok{b1 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{]}
+
+\NormalTok{df.y }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+
+  \StringTok{"Mean percentage of dead population"} \OtherTok{=} \FunctionTok{mean}\NormalTok{(pop\_death\_per\_country),}
+
+  \StringTok{"Standard Deviation of percentage of dead population"} \OtherTok{=} \FunctionTok{sd}\NormalTok{(pop\_death\_per\_country),}
+
+  \StringTok{"Minimum percentage of dead population"} \OtherTok{=} \FunctionTok{min}\NormalTok{(pop\_death\_per\_country),}
+
+  \StringTok{"Maximum percentage of dead population"} \OtherTok{=} \FunctionTok{max}\NormalTok{(pop\_death\_per\_country)}
+
+\NormalTok{)}
+
+\FunctionTok{show}\NormalTok{(df.y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Mean.percentage.of.dead.population
+## 1                         0.08397941
+##   Standard.Deviation.of.percentage.of.dead.population
+## 1                                          0.05077081
+##   Minimum.percentage.of.dead.population Maximum.percentage.of.dead.population
+## 1                           0.008498168                             0.1851294
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df.x }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+
+  \StringTok{"b0"} \OtherTok{=}\NormalTok{ b0,}
+
+  \StringTok{"b1"} \OtherTok{=}\NormalTok{ b1,}
+
+  \StringTok{"Mean HDI"} \OtherTok{=} \FunctionTok{mean}\NormalTok{(hdi),}
+
+  \StringTok{"Standard Deviation of HDI"} \OtherTok{=} \FunctionTok{sd}\NormalTok{(hdi),}
+
+  \StringTok{"Minimum HDI"} \OtherTok{=} \FunctionTok{min}\NormalTok{(hdi),}
+
+  \StringTok{"Maximum HDI"} \OtherTok{=} \FunctionTok{max}\NormalTok{(hdi)}
+
+\NormalTok{)}
+
+\FunctionTok{show}\NormalTok{(df.x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      b0       b1  Mean.HDI Standard.Deviation.of.HDI
+## (Intercept) -0.02997058 0.131377 0.8673514                0.07818149
+##             Minimum.HDI Maximum.HDI
+## (Intercept)       0.645       0.957
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(hdi, pop\_death\_per\_country, }\AttributeTok{main=}\StringTok{"Total Population Death \% and HDI"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"HDI"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Total Population Death \%"}\NormalTok{)}
+
+\FunctionTok{abline}\NormalTok{(b0, b1, }\AttributeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+We can see from the plot there appears to be a slight correlation
+between HDI and Total Deaths, except the correlation is in the opposite
+direction from what we predicted. This may just a be an unfortunate
+consequence of the aggregation, but in either case it would be best to
+perform a test to determine the likelihood that the relationship shown
+in the graph is not an instance of chance. For this, we can perform a
+hypothesis test. If there does not exist a relationship between HDI and
+Total Deaths, then we would expect the slope of the line to be equal to
+0, whereas if there is a relationship between the two variables, then we
+would expect the slope to be anything but 0. Therefore we pose the
+following hypothesis test on the slope of the model:
+\(H_0: \beta_1 = 0\) and \(H_a: \beta1 \neq 0\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{standard.error }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+
+\NormalTok{p.value }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+
+\NormalTok{df.p.and.error }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+
+  \StringTok{"Standard Error"} \OtherTok{=}\NormalTok{ standard.error,}
+
+  \StringTok{"P Value"} \OtherTok{=}\NormalTok{ p.value}
+
+\NormalTok{)}
+
+\FunctionTok{show}\NormalTok{(p.value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2298255
+\end{verbatim}
+
+With the p-value being 0.230, we can say that the smallest \(\alpha\)
+for which we can conclude the alternative hypothesis is 0.230. This
+simply means that we can say with a confidence of 77\% that the percent
+of the total population that died from COVID has a linear relationship
+with the Human Development index, despite it not being linear in the
+direction we hoped. We made an attempt to adjust this linear model to
+help it better fit the our error assumptions for a linear model. Instead
+of plotting total deaths against HDI, we found that we get a
+significantly better model if we plot total deaths against
+\(\text{HDI}^2+\text{ HDI}\). When we discuss our analysis of the
+residuals of the model later in the paper, we will explain why such a
+transformation is better.
+
+The second variable we chose to look at was percentage of population
+vaccinated/fully vaccinated, the difference being whether or not a
+person has had a complete vaccination vs only had a partial vaccination.
+The logic behind this decision is pretty self explanatory: if a
+population has a high vaccination rate, then they are more likely to
+have a lower death rate.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{agg\_new\_deaths }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+
+\NormalTok{agg\_fully\_vaccinated\_population }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+
+\NormalTok{agg\_vaccinated\_populations }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+Our initial models for these plots came out very ugly. We will provide a
+copy of the plots below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated, covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated, covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-18-2.pdf}
+
+As you can see in these plots, there are an extremely high number of
+data points concentrated in the range 0 to 10 on the x-axis. This is due
+to the fact that we are not aggregating the data, so every single entry
+in our entire data set is included in this plot, including many early
+observations when the number of new covid deaths was very low. Aside
+from this though, we do see a slightly negative linear trend of data
+points extending out from the mass on the left. We can interpret this as
+a good thing, for this likely means that for all the observations in
+which the number of new deaths was significant, having a higher
+vaccinated population helps decrease the number of new deaths in the
+population. Overall though, we cannot perform much useful analysis on
+the models since the concentrated data on the left would dilute the
+accuracy of the results. One attempt we made to fix this was to combine
+the two models while transforming the predictor variables. Instead of
+plotting new deaths against percentage of vaccinated/fully vaccinated
+population individually, we plotted against percentage of population
+vaccinated squared combined with the square root of percentage of
+population fully vaccinated. Again, the motivation for this change will
+be explained later when we discuss analysis of the residuals of the
+model.
+
+The last variable which we chose to look at is actually just a revision
+of the second. Since the plots in our second model are heavily
+concentrated on the left, we thought that if we were to aggregate the
+data by country, then we could help eliminate the congestion of data
+points which made it difficult to perform analysis. The models for these
+plots unfortunately aren't a whole lot better, but they do allow us to
+perform some useful analysis. Here are the plots containing the models
+for percentage vaccinated/fully vaccinated.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(agg\_vaccinated\_populations, agg\_new\_deaths)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(agg\_fully\_vaccinated\_population, agg\_new\_deaths)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-19-2.pdf}
+
+We can see from the plots that the congestion on the left has
+significantly decreased and that among the few data points not on the
+left side of the plots, they correlate to low numbers of new deaths,
+indicating that among the countries which have higher percentages of
+vaccinated populations, their respective aggregated new death rate is
+low. Although the sample size is low for this conjecture, it is still a
+promising result. To adjust this model, we followed our decision made in
+the previous model combined the two plots together, but instead of
+transforming our predictor variables, we instead transformed our
+response variable. The transformed data now plots aggregated new deaths
+squared against percentage of population vaccinated and percentage of
+population fully vaccinated. The motivation for this transformation will
+be discussed later in the analysis of the residuals.
+
+\hypertarget{the-final-model-for-question-1}{%
+\subsection{The Final Model for question
+1}\label{the-final-model-for-question-1}}
+
+\hypertarget{final-model-estimated-regression-coefficients}{%
+\subsubsection{Final model estimated regression
+coefficients}\label{final-model-estimated-regression-coefficients}}
+
+Final model estimated regression coefficients are -1.729823, 4.326984,
+and -2.557500.
+
+\hypertarget{final-model-standard-errors}{%
+\subsubsection{Final model standard
+errors}\label{final-model-standard-errors}}
+
+Final model standard errors are plotted below, with an average error of
+5.500678e-19, standard error of 1.808786, and p-value of 2.242029e-02
+along with 1.723184e-01 R squared error.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pop\_death\_per\_country }\OtherTok{\textless{}{-}}\NormalTok{ agg\_pop\_death\_percentage}\SpecialCharTok{$}\NormalTok{x}
+\NormalTok{hdi }\OtherTok{\textless{}{-}}\NormalTok{ agg\_hdi}\SpecialCharTok{$}\NormalTok{x}
+
+\NormalTok{linmod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pop\_death\_per\_country}\SpecialCharTok{\textasciitilde{}}\FunctionTok{poly}\NormalTok{(hdi, }\DecValTok{2}\NormalTok{, }\AttributeTok{raw=}\ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{b0 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{1}\NormalTok{]}
+\NormalTok{b1 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{]}
+\NormalTok{b2 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{3}\NormalTok{]}
+
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(b0, b1, b2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               (Intercept) poly(hdi, 2, raw = TRUE)1 poly(hdi, 2, raw = TRUE)2 
+##                 -1.729823                  4.326984                 -2.557500
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Yhat }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{fitted.values}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(linmod)}
+
+\NormalTok{standard.error }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{p.value }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(e), standard.error, p.value, }\FunctionTok{summary}\NormalTok{(linmod)}\SpecialCharTok{$}\NormalTok{r.squared))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.500678e-19 1.808786e+00 2.242029e-02 1.723184e-01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(Yhat,e, }\AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}fitted values\textquotesingle{}} \SpecialCharTok{\textasciitilde{}} \FunctionTok{hat}\NormalTok{(Y)),}\AttributeTok{ylab=}\StringTok{"residual e"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\hypertarget{final-model-test-results}{%
+\subsubsection{Final model test
+results}\label{final-model-test-results}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y.hat }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{fitted.values }\CommentTok{\# Obtain fitted values}
+\CommentTok{\# Compute sums of squares}
+\NormalTok{Y.bar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(pop\_death\_per\_country)}
+\NormalTok{SSR }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((Y.hat }\SpecialCharTok{{-}}\NormalTok{ Y.bar)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SSE }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((pop\_death\_per\_country }\SpecialCharTok{{-}}\NormalTok{ Y.hat)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(hdi)}
+\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{3}
+
+\CommentTok{\# Compute mean squares}
+\NormalTok{MSR }\OtherTok{\textless{}{-}}\NormalTok{ SSR}\SpecialCharTok{/}\NormalTok{(p}\DecValTok{{-}1}\NormalTok{)}
+\NormalTok{MSE }\OtherTok{\textless{}{-}}\NormalTok{ SSE}\SpecialCharTok{/}\NormalTok{(n }\SpecialCharTok{{-}}\NormalTok{ p)}
+
+\NormalTok{f.stat }\OtherTok{\textless{}{-}}\NormalTok{ MSR}\SpecialCharTok{/}\NormalTok{MSE}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+\NormalTok{fquantile }\OtherTok{\textless{}{-}} \FunctionTok{qf}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha, p}\DecValTok{{-}1}\NormalTok{, n }\SpecialCharTok{{-}}\NormalTok{ p)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(f.stat, p}\DecValTok{{-}1}\NormalTok{, n}\SpecialCharTok{{-}}\NormalTok{p, fquantile))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  3.539300  2.000000 34.000000  3.275898
+\end{verbatim}
+
+Clearly the Fstat is 3.539300 which is more than the 0.95 quantile,
+3.275898 we conclude \(H_{a}\): \(\beta_{k} \ne 0\) for some k
+\textgreater{} 0 and k \textless{} p, i.e.~there is a linear association
+(regression relation). It also implies that One or more of
+\(\beta_{1}, \beta_{2}\) is non zero.
+
+\hypertarget{detailed-exploration-of-final-model-residuals}{%
+\subsubsection{Detailed exploration of final model
+residuals}\label{detailed-exploration-of-final-model-residuals}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y1 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\SpecialCharTok{$}\NormalTok{fitted.values }\SpecialCharTok{{-}}\NormalTok{ b0}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(linmod)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(pop\_death\_per\_country, Y1, }\AttributeTok{xlab =}\StringTok{"\% Population of Death per Country"}\NormalTok{ ,}\AttributeTok{ylab=}\FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}Y\_i {-} b\_0\textquotesingle{}}\NormalTok{), }\AttributeTok{pch =} \DecValTok{16}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(hdi, pop\_death\_per\_country }\SpecialCharTok{{-}}\NormalTok{ b0 }\SpecialCharTok{{-}}\NormalTok{ b2}\SpecialCharTok{*}\NormalTok{hdi}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =}\NormalTok{ b1, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(hdi}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, pop\_death\_per\_country }\SpecialCharTok{{-}}\NormalTok{ b0 }\SpecialCharTok{{-}}\NormalTok{ b1}\SpecialCharTok{*}\NormalTok{hdi)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =}\NormalTok{ b2, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(linmod)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(hdi, e, }\AttributeTok{xlab=}\StringTok{"HDI"}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(e, }\AttributeTok{main=}\StringTok{"Histogram of residuals"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"residual e"}\NormalTok{, }\AttributeTok{col=}\StringTok{"darkmagenta"}\NormalTok{, }\AttributeTok{freq=}\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{qqnorm}\NormalTok{(e, }\AttributeTok{pch =} \DecValTok{1}\NormalTok{, }\AttributeTok{frame =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{qqline}\NormalTok{(e, }\AttributeTok{col =} \StringTok{"steelblue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\hypertarget{independence}{%
+\subsubsection{Independence}\label{independence}}
+
+For this regression model, the HDIs are clearly independent from each
+other since we have a single data point for each country in the dataset.
+Therefore we are not violating the independence assumption of regression
+models.
+
+\hypertarget{equal-variance}{%
+\subsubsection{Equal variance}\label{equal-variance}}
+
+We are also assuming equal variance in our regression model. From the
+residuals against the fitted values plot, we can see that they make
+almost a uniform spread of residual at the later values of Y.hat.
+Clearly, there is a consistent vertical spread almost throughout the
+graph. There is a minor/ very small violation of equal variance due to
+this inconsistent spread in the beginning of Y.hat (One outlier).
+
+\hypertarget{linearlity}{%
+\subsubsection{Linearlity}\label{linearlity}}
+
+There are no specific regions in the graph with a majority of positive
+or negative residuals, therefore the model doesn't exclusively
+underpredict or overpredict in a region, indicating that the data tends
+to be linear. The same can be said from the \(Y_i-b_0\) against \%
+Population of Death per Country and \(Y_i - b_0 - b_1 X\) and
+\(Y_i - b_0 - b_2 X^2\) against \(X^2\) and \(X\)
+
+\hypertarget{normality}{%
+\subsubsection{Normality}\label{normality}}
+
+The QQ-Plot allows us to visualize the normality of the errors from the
+data. There is a close to none violation of normality in the QQ-Plot
+since the data is relatively evenly spread out accross the line, with no
+strafing tails.
+
+\hypertarget{need-for-interactions-assessed}{%
+\subsubsection{Need for interactions
+assessed}\label{need-for-interactions-assessed}}
+
+None needed cause uni variable.
+
+\hypertarget{the-final-model-for-question-2}{%
+\subsection{The Final Model for question
+2}\label{the-final-model-for-question-2}}
+
+\hypertarget{final-model-estimated-regression-coefficients-1}{%
+\subsubsection{Final model estimated regression
+coefficients}\label{final-model-estimated-regression-coefficients-1}}
+
+Final model estimated regression coefficients are -6.785320e-04,
+1.274800e-07, and -1.058172e-04.
+
+\hypertarget{final-model-standard-errors-1}{%
+\subsubsection{Final model standard
+errors}\label{final-model-standard-errors-1}}
+
+Final model standard errors are plotted below, with an average error of
+3.778659e-19, standard error of 6.477939e-08, and p-value of
+4.932836e-02 along with 1.762273e-02 R squared error.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linmod2.modify }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated }\SpecialCharTok{\^{}} \FloatTok{0.5}\NormalTok{))}
+\NormalTok{b0.modify }\OtherTok{\textless{}{-}}\NormalTok{ linmod2.modify}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{1}\NormalTok{]}
+\NormalTok{b1.modify }\OtherTok{\textless{}{-}}\NormalTok{ linmod2.modify}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{]}
+\NormalTok{b2.modify }\OtherTok{\textless{}{-}}\NormalTok{ linmod2.modify}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{3}\NormalTok{]}
+
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(b0.modify, b1.modify, b2.modify))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                  (Intercept) 
+##                                 6.785320e-04 
+##         I(covid_new$percentage_vaccinated^2) 
+##                                 1.274800e-07 
+## I(covid_new$percentage_fully_vaccinated^0.5) 
+##                                -1.058172e-04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e.square }\OtherTok{\textless{}{-}}\NormalTok{ linmod2.modify}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{Y.hat.square }\OtherTok{\textless{}{-}}\NormalTok{ linmod2.modify}\SpecialCharTok{$}\NormalTok{fitted.values}
+
+\NormalTok{standard.error }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod2.modify)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{p.value }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod2.modify)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(e.square), standard.error, p.value, }\FunctionTok{summary}\NormalTok{(linmod2.modify)}\SpecialCharTok{$}\NormalTok{r.squared))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.778659e-19 6.477939e-08 4.932836e-02 1.762273e-02
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(Y.hat.square, e.square, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Fitted Values"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{,}
+\AttributeTok{main =} \StringTok{"Modified Model"}\NormalTok{, }\AttributeTok{cex=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.lab=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.axis=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.main=}\FloatTok{0.5}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\hypertarget{final-model-test-results-1}{%
+\subsubsection{Final model test
+results}\label{final-model-test-results-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y.hat }\OtherTok{\textless{}{-}}\NormalTok{ linmod2.modify}\SpecialCharTok{$}\NormalTok{fitted.values }\CommentTok{\# Obtain fitted values}
+\CommentTok{\# Compute sums of squares}
+\NormalTok{Y.bar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths)}
+\NormalTok{SSR }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((Y.hat }\SpecialCharTok{{-}}\NormalTok{ Y.bar)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SSE }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths }\SpecialCharTok{{-}}\NormalTok{ Y.hat)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths)}
+\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{3}
+
+\CommentTok{\# Compute mean squares}
+\NormalTok{MSR }\OtherTok{\textless{}{-}}\NormalTok{ SSR}\SpecialCharTok{/}\NormalTok{(p}\DecValTok{{-}1}\NormalTok{)}
+\NormalTok{MSE }\OtherTok{\textless{}{-}}\NormalTok{ SSE}\SpecialCharTok{/}\NormalTok{(n }\SpecialCharTok{{-}}\NormalTok{ p)}
+
+\NormalTok{f.stat }\OtherTok{\textless{}{-}}\NormalTok{ MSR}\SpecialCharTok{/}\NormalTok{MSE}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+\NormalTok{fquantile }\OtherTok{\textless{}{-}} \FunctionTok{qf}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha, p}\DecValTok{{-}1}\NormalTok{, n }\SpecialCharTok{{-}}\NormalTok{ p)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(f.stat, p}\DecValTok{{-}1}\NormalTok{, n}\SpecialCharTok{{-}}\NormalTok{p, fquantile))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]    9.902252    2.000000 1104.000000    3.003876
+\end{verbatim}
+
+Clearly the Fstat is 9.902252 which is more than the 0.95 quantile,
+3.003876 we conclude \(H_{a}\): \(\beta_{k} \ne 0\) for some k
+\textgreater{} 0 and k \textless{} p, i.e.~there is a linear association
+(regression relation). It also implies that One or more of
+\(\beta_{1}, \beta_{2}\) is non zero.
+
+\hypertarget{detailed-exploration-of-final-model-residuals-1}{%
+\subsubsection{Detailed exploration of final model
+residuals}\label{detailed-exploration-of-final-model-residuals-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y }\OtherTok{\textless{}{-}}\NormalTok{ covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, Y }\SpecialCharTok{{-}}\NormalTok{ b0.modify }\SpecialCharTok{{-}}\NormalTok{ b2.modify}\SpecialCharTok{*}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)), }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Squared \% of People Vaccinated"}\NormalTok{,}
+\AttributeTok{ylab =} \FunctionTok{expression}\NormalTok{(Y}\SpecialCharTok{{-}}\NormalTok{b[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{{-}}\NormalTok{b[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{X[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)), }\AttributeTok{main =} \StringTok{"Modified Model"}\NormalTok{,}
+\AttributeTok{cex=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.lab=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.axis=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.main=}\FloatTok{0.5}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =}\NormalTok{ b1.modify, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), Y }\SpecialCharTok{{-}}\NormalTok{ b0.modify }\SpecialCharTok{{-}}\NormalTok{ b1.modify}\SpecialCharTok{*}\NormalTok{covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Root \% of People Fully Vaccinated"}\NormalTok{,}
+\AttributeTok{ylab =} \FunctionTok{expression}\NormalTok{(Y}\SpecialCharTok{{-}}\NormalTok{b[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{{-}}\NormalTok{b[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{*}\NormalTok{X[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{), }\AttributeTok{main =} \StringTok{"Modified Model"}\NormalTok{,}
+\AttributeTok{cex=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.lab=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.axis=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{cex.main=}\FloatTok{0.5}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =}\NormalTok{ b2.modify, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(linmod2.modify)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), e, }\AttributeTok{xlab=}\StringTok{"percentage\_fully\_vaccinated"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, e, }\AttributeTok{xlab=}\StringTok{"percentage\_vaccinated"}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(e, }\AttributeTok{main=}\StringTok{"Histogram of residuals"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"residual e"}\NormalTok{, }\AttributeTok{col=}\StringTok{"darkmagenta"}\NormalTok{, }\AttributeTok{freq=}\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{qqnorm}\NormalTok{(e, }\AttributeTok{pch =} \DecValTok{1}\NormalTok{, }\AttributeTok{frame =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{qqline}\NormalTok{(e, }\AttributeTok{col =} \StringTok{"steelblue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\hypertarget{independence-1}{%
+\subsubsection{Independence}\label{independence-1}}
+
+For this regression model, the \% of People fully Vaccinated and \% of
+People Vaccinated is independent to \% of new deaths. This is because
+the \% of vaccinated is not grouped/ aggregated by country thus there
+are multiple points for a single country at different day's which are
+making the dependence to each other very plausible. Thus the relation
+between the residual error is can be dependent. Therefore we might be
+violating the independence assumption of regression models.
+
+\hypertarget{equal-variance-1}{%
+\subsubsection{Equal variance}\label{equal-variance-1}}
+
+We are also assuming equal variance in our regression model. From the
+residuals against the fitted values plot, we can see that they make a
+cone-shape, clearly, there isn't a consistent vertical spread throughout
+the graph. There is a huge violation of equal variance due to this
+inconsistent spread.
+
+\hypertarget{linearlity-1}{%
+\subsubsection{Linearlity}\label{linearlity-1}}
+
+There are specific regions in the graph with a majority of positive or
+negative residuals, therefore the model does under-predict or
+over-predict in a region, indicating that the data tends to be
+non-linear. The same can be said from the \(Y_i-b_0\) against \%
+Population of Death
+
+In the case of \(Y_i - b_0 - b_1\) * \% of People Vaccinated there is
+significant over predication when the \% of People fully Vaccinated
+increases and in the case of \(Y_i - b_0 - b_2\) * \% of People Fully
+Vaccinated there is significant under predication when the \% of People
+fully Vaccinated increase
+
+\hypertarget{normality-1}{%
+\subsubsection{Normality}\label{normality-1}}
+
+The QQ-Plot allows us to visualize the normality of the errors from the
+data. There is a significant tail violation of normality in the QQ-Plot
+since the data is relatively evenly spread out across the line, when
+more points should be centered in the middle of the line. The tails also
+strafe from the line.
+
+\hypertarget{need-for-interactions-assessed-1}{%
+\subsubsection{Need for interactions
+assessed}\label{need-for-interactions-assessed-1}}
+
+Even on adding the interaction term, the p-value didn't suggest for
+keeping that variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths)}
+\NormalTok{linmod2\_expanded }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated }\SpecialCharTok{\^{}} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ (covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated }\SpecialCharTok{*}\NormalTok{ covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated))}
+\NormalTok{Y.hat.full }\OtherTok{\textless{}{-}}\NormalTok{ linmod2.modify}\SpecialCharTok{$}\NormalTok{fitted.values}
+\NormalTok{Y.hat.expanded }\OtherTok{\textless{}{-}}\NormalTok{ linmod2\_expanded}\SpecialCharTok{$}\NormalTok{fitted.values}
+\NormalTok{SSE.full }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths }\SpecialCharTok{{-}}\NormalTok{ Y.hat.full)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SSE.expanded }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths }\SpecialCharTok{{-}}\NormalTok{ Y.hat.expanded)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{df.full }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{{-}} \DecValTok{3}
+\NormalTok{df.expanded }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{{-}} \DecValTok{4}
+\NormalTok{f.stat }\OtherTok{\textless{}{-}}\NormalTok{ (SSE.full }\SpecialCharTok{{-}}\NormalTok{ SSE.expanded)}\SpecialCharTok{/}\NormalTok{(df.full }\SpecialCharTok{{-}}\NormalTok{ df.expanded)}\SpecialCharTok{/}\NormalTok{(SSE.expanded}\SpecialCharTok{/}\NormalTok{df.expanded)}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+\NormalTok{fquantile }\OtherTok{\textless{}{-}} \FunctionTok{qf}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha, df.full }\SpecialCharTok{{-}}\NormalTok{ df.expanded, df.expanded)}
+\NormalTok{pvalue }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pf}\NormalTok{(f.stat, df.full }\SpecialCharTok{{-}}\NormalTok{ df.expanded, df.expanded)}
+\end{Highlighting}
+\end{Shaded}
+
+Clearly the Fstat is 1.335048e+00 which is less than the 0.95 quantile,
+3.849903e+00. we conclude \(H_{0}\): \(\beta_{4} = 0\)
+i.e.~\(X_{1} * X_{2}\) can be dropped from the regression model
+
+\hypertarget{the-final-model-for-question-3}{%
+\subsection{The Final Model for question
+3}\label{the-final-model-for-question-3}}
+
+\hypertarget{final-model-estimated-regression-coefficients-2}{%
+\subsubsection{Final model estimated regression
+coefficients}\label{final-model-estimated-regression-coefficients-2}}
+
+Final model estimated regression coefficients are 3.128825e-07,
+5.763682e-08, and -1.128989e-07.
+
+\hypertarget{final-model-standard-errors-2}{%
+\subsubsection{Final model standard
+errors}\label{final-model-standard-errors-2}}
+
+Final model standard errors are plotted below, with an average error of
+-2.080667e-23, standard error of 3.673124e-08, and p-value of
+1.258740e-01 along with 7.622458e-02 R squared error.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{agg\_new\_deaths }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{perecentage\_new\_deaths, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+\NormalTok{agg\_fully\_vaccinated\_population }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_fully\_vaccinated, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+\NormalTok{agg\_vaccinated\_populations }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{percentage\_vaccinated, }\AttributeTok{by=}\FunctionTok{list}\NormalTok{(covid\_new}\SpecialCharTok{$}\NormalTok{location), mean)}\SpecialCharTok{$}\NormalTok{x}
+
+\NormalTok{linmod}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(agg\_new\_deaths}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{\textasciitilde{}}\NormalTok{ agg\_vaccinated\_populations }\SpecialCharTok{+}\NormalTok{ agg\_fully\_vaccinated\_population)}
+\NormalTok{b0 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\FloatTok{.2}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{1}\NormalTok{]}
+\NormalTok{b1 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\FloatTok{.2}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{]}
+\NormalTok{b2 }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\FloatTok{.2}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{3}\NormalTok{]}
+
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(b0, b1, b2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                     (Intercept)      agg_vaccinated_populations 
+##                    3.128825e-07                    5.763682e-08 
+## agg_fully_vaccinated_population 
+##                   -1.128989e-07
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Yhat }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\FloatTok{.2}\SpecialCharTok{$}\NormalTok{fitted.values}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(linmod}\FloatTok{.2}\NormalTok{)}
+
+\NormalTok{standard.error }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod}\FloatTok{.2}\NormalTok{)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{p.value }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(linmod}\FloatTok{.2}\NormalTok{)}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(e), standard.error, p.value, }\FunctionTok{summary}\NormalTok{(linmod}\FloatTok{.2}\NormalTok{)}\SpecialCharTok{$}\NormalTok{r.squared))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.080667e-23  3.673124e-08  1.258740e-01  7.622458e-02
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(Yhat,e, }\AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}fitted values\textquotesingle{}} \SpecialCharTok{\textasciitilde{}} \FunctionTok{hat}\NormalTok{(Y)),}\AttributeTok{ylab=}\StringTok{"residual e"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\hypertarget{final-model-test-results-2}{%
+\subsubsection{Final model test
+results}\label{final-model-test-results-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y.hat }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\FloatTok{.2}\SpecialCharTok{$}\NormalTok{fitted.values }\CommentTok{\# Obtain fitted values}
+\CommentTok{\# Compute sums of squares}
+\NormalTok{Y.bar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((agg\_new\_deaths)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SSR }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((Y.hat }\SpecialCharTok{{-}}\NormalTok{ Y.bar)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SSE }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(((agg\_new\_deaths)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\NormalTok{ Y.hat)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(agg\_new\_deaths)}
+\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{3}
+
+\CommentTok{\# Compute mean squares}
+\NormalTok{MSR }\OtherTok{\textless{}{-}}\NormalTok{ SSR}\SpecialCharTok{/}\NormalTok{(p}\DecValTok{{-}1}\NormalTok{)}
+\NormalTok{MSE }\OtherTok{\textless{}{-}}\NormalTok{ SSE}\SpecialCharTok{/}\NormalTok{(n }\SpecialCharTok{{-}}\NormalTok{ p)}
+
+\NormalTok{f.stat }\OtherTok{\textless{}{-}}\NormalTok{ MSR}\SpecialCharTok{/}\NormalTok{MSE}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.1}
+\NormalTok{fquantile }\OtherTok{\textless{}{-}} \FunctionTok{qf}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha, p}\DecValTok{{-}1}\NormalTok{, n }\SpecialCharTok{{-}}\NormalTok{ p)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(f.stat, p}\DecValTok{{-}1}\NormalTok{, n}\SpecialCharTok{{-}}\NormalTok{p, fquantile))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1.402741  2.000000 34.000000  2.465809
+\end{verbatim}
+
+Clearly the Fstat is 1.402741 which is close but less than the 0.95
+quantile, 2.465809 we conclude \(H_{o}\): \(\beta_{k} = 0\) for some k
+\textgreater{} 0 and k \textless{} p, i.e.~It implies that One or more
+of \(\beta_{1}, \beta_{2}\) is zero.
+
+\hypertarget{detailed-exploration-of-final-model-residuals-2}{%
+\subsubsection{Detailed exploration of final model
+residuals}\label{detailed-exploration-of-final-model-residuals-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y1 }\OtherTok{\textless{}{-}}\NormalTok{ (agg\_new\_deaths)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\NormalTok{ b0 }\SpecialCharTok{{-}}\NormalTok{ b1}\SpecialCharTok{*}\NormalTok{agg\_vaccinated\_populations}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(linmod}\FloatTok{.2}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{((agg\_new\_deaths)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{,Y1, }\AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}Aggrigated \% of People Fully Vaccinated Population\textquotesingle{}}\NormalTok{),}\AttributeTok{ylab=}\StringTok{\textquotesingle{}Y\_i\^{}2 {-} b\_0 {-} b1 * Aggrigated \% of People Vaccinated Populations\textquotesingle{}}\NormalTok{, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
+\NormalTok{Y2 }\OtherTok{\textless{}{-}}\NormalTok{ (agg\_new\_deaths)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\NormalTok{ b0 }\SpecialCharTok{{-}}\NormalTok{ b2}\SpecialCharTok{*}\NormalTok{agg\_fully\_vaccinated\_population}
+\FunctionTok{plot}\NormalTok{((agg\_new\_deaths)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, Y2, }\AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(}\StringTok{\textquotesingle{}Aggrigated \% of People Vaccinated Populations\textquotesingle{}}\NormalTok{),}\AttributeTok{ylab=}\StringTok{\textquotesingle{}Y\_i\^{}2 {-} b\_0 {-} b2 * Aggrigated \% of People Fully Vaccinated Population\textquotesingle{}}\NormalTok{, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(linmod}\FloatTok{.2}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(agg\_fully\_vaccinated\_population, e, }\AttributeTok{xlab=}\StringTok{"Aggrigated \% of People Fully Vaccinated Population"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(agg\_vaccinated\_populations, e, }\AttributeTok{xlab=}\StringTok{"Aggrigated \% of People Vaccinated Population"}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(e, }\AttributeTok{main=}\StringTok{"Histogram of residuals"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"residual e"}\NormalTok{, }\AttributeTok{col=}\StringTok{"darkmagenta"}\NormalTok{, }\AttributeTok{freq=}\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{qqnorm}\NormalTok{(e, }\AttributeTok{pch =} \DecValTok{1}\NormalTok{, }\AttributeTok{frame =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{qqline}\NormalTok{(e, }\AttributeTok{col =} \StringTok{"steelblue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_ie_6_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\hypertarget{independence-2}{%
+\subsubsection{Independence}\label{independence-2}}
+
+For this regression model, the \% of People fully Vaccinated and \% of
+People Vaccinated might be dependent to \% of new deaths. This is
+because the \% of vaccinated is grouped/ aggregated by country thus
+there is a point for a single country. And via the graph, the \% of
+People fully Vaccinated and \% of People Vaccinated have no dependence
+to \% of new deaths thus affecting the relation between the residual
+errors (Showing no dependence). Therefore we aren't violating the
+independence assumption of regression models.
+
+\hypertarget{equal-variance-2}{%
+\subsubsection{Equal variance}\label{equal-variance-2}}
+
+We are also assuming equal variance in our regression model. From the
+residuals against the fitted values plot, we can see that they make a
+thin uniform band with 3 outliers, clearly, there is a consistent
+vertical spread throughout the graph. There is no violation of equal
+variance due to this consistent spread.
+
+\hypertarget{linearlity-2}{%
+\subsubsection{Linearlity}\label{linearlity-2}}
+
+There are no specific regions in the graph with a majority of positive
+or negative residuals, therefore the model doesn't exclusively
+under-predict or over-predict in a region, indicating that the data
+tends to be linear. The same can be said from the \(Y_i^2 - b_0 - b_1\)
+* \% of People Vaccinated against \% Population of Death and
+\(Y_i^2 - b_0 - b_2\) * \% of People Fully Vaccinated against \%
+Population of Death
+
+\hypertarget{normality-2}{%
+\subsubsection{Normality}\label{normality-2}}
+
+The QQ-Plot allows us to visualize the normality of the errors from the
+data. There is a minor tail violation of normality in the QQ-Plot (cause
+of an outlier) since the data is relatively evenly spread out across the
+line (barring one or two). The tails don't strafe much from the line
+(Little on one end again not alot). And the distribution is not
+``compacted'' on the ends. The quantiles from residuals distribution
+almost match quantiles from a normal distribution. Thus assumption of
+normality is not violated.
+
+\hypertarget{need-for-interactions-assessed-2}{%
+\subsubsection{Need for interactions
+assessed}\label{need-for-interactions-assessed-2}}
+
+Even on adding the interaction term, the p-value didn't suggest for
+keeping that variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(agg\_vaccinated\_populations)}
+\NormalTok{linmod2\_expanded }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(agg\_new\_deaths}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{\textasciitilde{}}\NormalTok{ agg\_vaccinated\_populations }\SpecialCharTok{+}\NormalTok{ agg\_fully\_vaccinated\_population }\SpecialCharTok{+}\NormalTok{ agg\_vaccinated\_populations }\SpecialCharTok{*}\NormalTok{ agg\_fully\_vaccinated\_population)}
+\NormalTok{Y.hat.full }\OtherTok{\textless{}{-}}\NormalTok{ linmod}\FloatTok{.2}\SpecialCharTok{$}\NormalTok{fitted.values}
+\NormalTok{Y.hat.expanded }\OtherTok{\textless{}{-}}\NormalTok{ linmod2\_expanded}\SpecialCharTok{$}\NormalTok{fitted.values}
+\NormalTok{SSE.full }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((agg\_new\_deaths}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\NormalTok{ Y.hat.full)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SSE.expanded }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((agg\_new\_deaths}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\NormalTok{ Y.hat.expanded)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{df.full }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{{-}} \DecValTok{3}
+\NormalTok{df.expanded }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{{-}} \DecValTok{4}
+\NormalTok{f.stat }\OtherTok{\textless{}{-}}\NormalTok{ (SSE.full }\SpecialCharTok{{-}}\NormalTok{ SSE.expanded)}\SpecialCharTok{/}\NormalTok{(df.full }\SpecialCharTok{{-}}\NormalTok{ df.expanded)}\SpecialCharTok{/}\NormalTok{(SSE.expanded}\SpecialCharTok{/}\NormalTok{df.expanded)}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+\NormalTok{fquantile }\OtherTok{\textless{}{-}} \FunctionTok{qf}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha, df.full }\SpecialCharTok{{-}}\NormalTok{ df.expanded, df.expanded)}
+\NormalTok{pvalue }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pf}\NormalTok{(f.stat, df.full }\SpecialCharTok{{-}}\NormalTok{ df.expanded, df.expanded)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(f.stat, df.full }\SpecialCharTok{{-}}\NormalTok{ df.expanded, df.expanded, fquantile, pvalue))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  0.003546532  1.000000000 33.000000000  4.139252496  0.952871028
+\end{verbatim}
+
+Clearly the Fstat is 1.2643724 which is less than the 0.95 quantile,
+4.1392525. we conclude \(H_{0}\): \(\beta_{4} = 0\)
+i.e.~agg\_vaccinated\_populations * agg\_fully\_vaccinated\_population
+can be dropped from the regression model
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\end{document}
