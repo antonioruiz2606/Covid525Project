@@ -24,7 +24,7 @@ covid_new = read.csv(file='covid_new.csv')
 agg_pop_death_percentage = aggregate(
     x = covid_new$percentage_total_deaths, 
     by = list(covid_new$location), 
-    FUN = mean
+    FUN = max
   )
 
 agg_hdi = aggregate(
@@ -52,10 +52,11 @@ e <- resid(linmod)
 plot(Yhat,e, xlab = expression('fitted values' ~ hat(Y)),ylab="residual e", pch = 16)
 abline(h = 0, lty = 3)
 ```
+
 ```{r}
-Y1 <- linmod$fitted.values - b0
+Y1 <- pop_death_per_country - b0
 e <- resid(linmod)
-plot(pop_death_per_country, Y1, xlab ="% Population of Death per Country" ,ylab=expression('Y_i - b_0'), pch = 16)
+plot(hdi,Y1, xlab = expression('HDI'),ylab='Y_i - b_0', pch = 16)
 abline(h = 0, lty = 3)
 ```
 
@@ -78,15 +79,21 @@ We are also assuming equal variance in our regression model. From the residuals 
 
 ### Linearlity
 
-There are no specific regions in the graph with a majority of positive or negative residuals, therefore the model doesn't exclusively underpredict or overpredict in a region, indicating that the data tends to be linear. The same can be said from the $Y_i-b_0$ against % Population of Death per Country
+There are no specific regions in the graph with a majority of positive or negative residuals, therefore the model doesn't exclusively underpredict or overpredict in a region, indicating that the data tends to be linear. The same can be said from the $Y_i-b_0$ against HDI.
 
 ### Normality
 
 The QQ-Plot allows us to visualize the normality of the errors from the data. There is a moderete violation of normality in the QQ-Plot since the data is relatively evenly spread out accross the line, when more points should be centered in the middle of the line. The tails also strafe from the line.
 
+### Review of Key Takeaways
+
+We previously raised the question of whether the predictors defining the country's state and financial conditions actually affect the number of deaths in that country. To answer that question, we decided to use Human Development Index(HDI) to predict the total percentage of deaths in that country. We selected HDI as it takes many factors into account to give a single number describing the development of a nation. So we made a regression model that predicts the total percentage of the population of a country that died due to covid if we provide it with the HDI of the country. We found out that HDI is a decent predictor for our goal. Meaning there is a relation between countries' HDI and the percentage of people who died in that country due to covid. Detailed analysis reveals that the difference between the actual percentage of people who died vs. the values predicted by our model is centered around zero and doesn't show any pattern; this means each country is independent of one another, knowing data of one country wouldn't be enough to make a solid statement about other countries death percentage. We also found out that predictions made by our model for all countries are neither over-predicting nor under-predicting consistently, meaning that our model is good with forecasts in general. Lastly, we also found out that the residual or difference between the actual percentage of the population which died due to covid and the predicted value comes from a uniform distribution; for the most part, this is only violated when the residual or the difference is too big. That means our model prediction is good and we can know by what maximum value will our prediction vary from the actual value.
+
 ## Evaluating The Model 2
 
 The validity of the previous analysis depends on the assumptions we have made by using a regression model, so we need to verify which assumptions we violate.
+
+### Review of Key Takeaways
 
 ```{r}
 linmod2 <- lm(covid_new$perecentage_new_deaths ~ covid_new$percentage_vaccinated + covid_new$percentage_fully_vaccinated)
@@ -123,8 +130,7 @@ qqline(e, col = "steelblue", lwd = 2)
 
 ### Independence
 
-For this regression model, the % of People fully Vaccinated and % of People Vaccinated is independent to % of new deaths. This is because the % of vaccinated is not grouped/ aggregated by country thus there are multiple points for a single country at different day's which are making the dependence to each other very difficult. Thus the relation between the residual error is quite independent.
-Therefore we are not violating the independence assumption of regression models.
+For this regression model, the % of People fully Vaccinated and % of People Vaccinated is independent to % of new deaths. This is because the % of vaccinated is not grouped/ aggregated by country thus there are multiple points for a single country at different day's which are making the dependence to each other very difficult. Thus the relation between the residual error is quite independent. Therefore we are not violating the independence assumption of regression models.
 
 ### Equal variance
 
@@ -134,7 +140,7 @@ We are also assuming equal variance in our regression model. From the residuals 
 
 There are specific regions in the graph with a majority of positive or negative residuals, therefore the model does under-predict or over-predict in a region, indicating that the data tends to be non-linear. The same can be said from the $Y_i-b_0$ against % Population of Death
 
-In the case of $Y_i - b_0 - b_1$ * % of People Vaccinated there is significant over predication when the % of People fully Vaccinated increases and in the case of  $Y_i - b_0 - b_2$ * % of People Fully Vaccinated there is significant under predication when the % of People fully Vaccinated increase
+In the case of $Y_i - b_0 - b_1$ \* % of People Vaccinated there is significant over predication when the % of People fully Vaccinated increases and in the case of $Y_i - b_0 - b_2$ \* % of People Fully Vaccinated there is significant under predication when the % of People fully Vaccinated increase
 
 ### Normality
 
@@ -143,6 +149,7 @@ The QQ-Plot allows us to visualize the normality of the errors from the data. Th
 ### Suggested transformation
 
 transform $X_{1} -> X_{1}^{2}$ and $X_{2} -> X_{2}^{1/2}$
+
 ```{r}
 linmod2.modify <- lm(covid_new$perecentage_new_deaths ~ I(covid_new$percentage_vaccinated ^ 2) + I(covid_new$percentage_fully_vaccinated ^ 0.5))
 e.square <- linmod2.modify$residuals
@@ -219,13 +226,34 @@ We are also assuming equal variance in our regression model. From the residuals 
 
 ### Linearlity
 
-There are no specific regions in the graph with a majority of positive or negative residuals, therefore the model doesn't exclusively under-predict or over-predict in a region, indicating that the data tends to be linear. The same can be said from the $Y_i - b_0 - b_1$ * % of People Vaccinated against % Population of Death and $Y_i - b_0 - b_2$ * % of People Fully Vaccinated against % Population of Death
+There are no specific regions in the graph with a majority of positive or negative residuals, therefore the model doesn't exclusively under-predict or over-predict in a region, indicating that the data tends to be linear. The same can be said from the $Y_i - b_0 - b_1$ \* % of People Vaccinated against % Population of Death and $Y_i - b_0 - b_2$ \* % of People Fully Vaccinated against % Population of Death
 
 ### Normality
 
-The QQ-Plot allows us to visualize the normality of the errors from the data. There is a no tail violation of normality in the QQ-Plot since the data is relatively evenly spread out across the line. The tails don't strafe much from the line. And the distribution is not "compacted" on the ends. The quantiles from residuals distribution almost match quantiles from a normal distribution.
-Thus assumption of normality is not violated.
+The QQ-Plot allows us to visualize the normality of the errors from the data. There is a no tail violation of normality in the QQ-Plot since the data is relatively evenly spread out across the line. The tails don't strafe much from the line. And the distribution is not "compacted" on the ends. The quantiles from residuals distribution almost match quantiles from a normal distribution. Thus assumption of normality is not violated.
 
 ### Suggested transformation
 
-Here we don't require a lot or any transformation cause most, if not all, assumptions are not violated. 
+Here we don't require a lot or any transformation cause most, if not all, assumptions are not violated.
+
+### Review of Key Takeaways
+
+Our original goal was to determine whether there existed a causal relationship between certain predictor variables such as percentage of population vaccinated, and percentage of new 
+deaths. We hypothesized that the percentage of new deaths on any given day would decrease if the percentage of the population vaccinated was higher. After our preliminary analysis we 
+found that there did exist a relationship between these two variables, so the next question to answer was whether the relationship could be represented with a linear model, and to do this
+we took a closer look at the variance of the residuals of a proposed linear model. We immediately noticed that variance was not evenly spread throughout the model and that linearity of 
+residuals was not respected. However we suggested that a better fix would be to aggregate the data by country so as to eliminate the congestion of residuals in the left side of the plots,
+and after doing so we found that the congestion significantly decreased, but the the skewed right residuals disappeared, likely a result of the aggregation without respecting the factor
+of time. Putting this aside, we continued to analyze the residuals of our regression model to see if they respected the assumptions we must make in order for a linear model to properly 
+fit the data. Starting with the residuals against fitted values plot, we can see that there is this dense section of points in the center of the graph, which was to be expected seeing as 
+the model closely fit a large section of the data points found in our previous graphs. However it is still very evident that the variance of the residuals is not evenly spread or 
+consistent through the graph, which would suggest that we should either use a variable transformation to better visualize the data or aggregate the data. We tried both options and noticed
+that both suggestions gave us data that better respected the assumptions of a linear model. In the aggregated by country data, the congestion disappeared, but so did the spread, so this
+approach, as suggest previously was not ideal. However, using a variable transformation made the congestion spread out, thus fixing both the spread and equality of variance considerably. 
+The transformed data still shows some signs of incorrect assumptions, but they are not nearly as egregious as they were before the transformation. Moving on, we looked at percentage of 
+population (fully) vaccinated against percentage of new deaths, and analyzed how well each of these variables did at predicting the percentage of new deaths if we assumed that all other 
+variables in the model were held constant, meaning we assumed that each other variable had a fixed contribution in the model. we can see from these plots that the data is heavily 
+congested on the left, but appears to follow a linear trend as it moves right. This indicates that the residuals in these plots are not very linear, and so another variable transformation
+may be required to better analyze the data. We applied the same variable transformation we used previously to this data and found that the non-linear trend still persisted, but the 
+visible slopes extending right across the plots are not as sharp as they used to be. This indicates that maybe a stronger variable transformation might be a better fix instead. Overall we
+concluded that for the given data and variables, a linear model might not be the best approach, but it is also not the worst approach either.
