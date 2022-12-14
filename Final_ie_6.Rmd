@@ -3,11 +3,15 @@ title: "Regression Analysis on COVID, Health, and Population Metrics"
 author: "Antonio R, Aditya M, Aadam L, Christopher L"
 fontsize: 12pt
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 mainfont: Times New Roman
-header-includes: \usepackage{setspace}\singlespacing
-geometry: margin=2.54cm,top=1cm
+header-includes: 
+  \usepackage{setspace}\singlespacing
+  \usepackage{fvextra}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+geometry: margin=1in
 ---
 
 ```{r setup, include=FALSE}

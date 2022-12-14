@@ -186,8 +186,6 @@ To summarize, we started by looking at the regression model between the percenta
 
 The validity of the previous analysis depends on the assumptions we have made by using a regression model, so we need to verify which assumptions we violate.
 
-<<CODE HERE>>
-
 ### Independence
 
 For this regression model, the HDIs are clearly independent from each other since we have a single data point for each country in the dataset. Therefore we are not violating the independence assumption of regression models.
